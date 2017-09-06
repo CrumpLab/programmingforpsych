@@ -27,6 +27,7 @@ This textbook is a collection of notes for a course on programming for psycholog
 *Contributing to the textbook*
 
 1. Use Hypothes.is, an amazing tool for annotating the web.
+
   a. Go to [Hypothes.is](https://web.hypothes.is/), and "get-started"
   b. Install the the add-on for chrome, or other browser
   c. That's it, turn on Hypothes.is when you are reading this textbook, and you will see all public annotations made by anyone else.
