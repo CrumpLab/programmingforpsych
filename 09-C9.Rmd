@@ -1,0 +1,744 @@
+# Web Experiments
+
+## Getting started: HTML, Javascript, JQUERY
+
+This tutorial makes use of HTML, JavaScript, CSS style sheets, and JQUERY (a useful JavaScript library). All of the code is written using any standard text editor. I use the free program Textwrangler, which automatically color codes your scripts and makes for easy editing. I also use Google Chrome to test and run code using its extensive developer tools for logging errors and command line for running and checking scripts.
+
+HTML files are created by saving your text file with a .html ending. JavaScript files are saved with a .js ending. CSS style sheets are saved with a .css ending.
+
+<div class="marginnote">
+-   <http://www.google.com/chrome> - Download Google Chrome
+-   <http://www.jquery.com> - Download JQUERY
+-   <http://www.w3schools.com> - General tutorials for all things web
+-   [\<http://www.codecademy.com](<http://www.codecademy.com) -Tutorials for learning Javascript and HTML
+-   <http://www.jsfiddle.net> -Develop and test HTML, Javascript, JQUERY and CSS online
+-   <http://www.stackoverflow.com> - Q and A forums for programming problems
+-   <http://www.stackexchange.com>
+</div>
+
+HTML, Javascript, and CSS work together to accomplish different functions. The HTML file will code the basic layout of the website. Things like text, buttons, and images that you want displayed on the website are coded in HTML. JavaScript is a programming language that works together with HTML. It can run on its own and run any sort of computations that you code, and more importantly it can control the behavior of the website. JQUERY is a free library for JavaScript that makes controlling HTML behavior very easy. Commands from this library will be used to hide and show information during the experiment. CSS style sheets are a part of HTML. They are used to set display properties of text, buttons, and images; for example, font size, color, location etc. All of these properties can be set in the HTML code itself without CSS, but having these properties set outside the main HTML code may help to keep your scripts tidy and readable.
+
+## Basic HTML
+
+The htmlbasics.html file shows a very simple webpage displaying a few html elements. The code reads:
+
+```{block}
+    <html>
+    <head>
+     
+    </head>
+     
+    <body>
+    <!-- this is a comment, not shown on page-->
+    <p>A new paragraph for text</p>
+    <p id="p1">A new paragraph for text</p>
+    <button>A button</button>
+    <a href="http://www.google.com">A link</a>
+    <br /> <!-- this is a line break -->
+    <p id="p2" align="center" style="color:red">A new paragraph for text</p>
+    </body>
+    </html>
+   
+```
+
+<div class="marginnote">
+List of common HTML elements
+
+-   \<p\> paragraph
+-   \<button\>
+-   \<input\> defines input controls
+-   \<textarea\> multi line text input
+-   \<br\> line break
+-   \<div\> define sections
+-   \<head\> header for javascript
+-   \<body\> main page
+-   \<script\> embed scripts
+-   \<iframe\> inline webpage
+-   \<canvas\> for drawing
+</div>
+
+
+Let’s look more closely at the code block above. All html documents begin with \<html\> and end with \</html\>. This is a general rule for all html statements (although there are some exceptions), they all start with \< \>, and end with \</ \>. For example,
+
+```{block}
+    <p> </p> declares a new paragraph
+    <button> </button> makes a new button
+  
+```
+
+
+These elements are placed on screen in the order that they are placed in the code. Paragraphs written with \<p\>\</p\> go to a new line. Each element, whether a button or paragraph, or some other element, has many properties that can change the look of the element and/or add new functionality. As an example, the last paragraph in the block above shows how to center the text, and how to make the font color red.
+
+Important: HTML elements can each be assigned a unique id. This allows the element to act as a variable that can be controlled by Javascript. Notice the second paragraph states:
+
+```{block}
+<p id="p1">A new paragraph for text</p>
+ 
+```
+
+This paragraph has the id, p1. We will be able to use Javascript to refer to this pargraph and control it’s behavior (hide and show, change contents etc.).
+
+## Javascript Basics
+
+Open Google Chrome, then choose View \> Developer Javascript console, from the menu. Find the command prompt that should appear on the bottom of the web browser, drag up and resize as you see fit. You can now enter Javascript commands into the terminal. You can copy and paste the whole .js file into the terminal and run it. The file has examples of declaring variables, running loops, if/then statements, and writing functions. The following describes these in more detail.
+
+### Variables
+
+In Javascript you need to declare variables before you use them. There are two ways of declaring variables. Type the following into the terminal and press enter:
+
+```{block}
+	a=1;
+ 
+```
+
+This will declare the variable a, and assign it a number value of 1. Because you have entered an integer, the number will be an integer, if you entered a decimal, it will become a floating point.
+
+You can see the contents of variables by typing their name and pressing enter in the terminal
+
+```{block}
+	a
+```
+
+This should return 1. When you write code in Javascript you normally end each line with a semicolon (;). This tells javascript not to print the line to the terminal. If you declare a variable without the (;) then it will print to the console loge.
+
+```{block}
+b=1
+```
+
+will print 1 to the console. It is best practice to use semicolons at the end of each line.
+
+Another way to declare variables is with var.
+
+```{block}
+var c = 1;
+```
+
+This is essentially the same as above, except including var makes the variable a local variable. It is best practice to declare all variables with var, this is especially important when writing functions. It makes the variables local to the function that you are writing. Whenever you want a global variable, do not use var.
+
+### Variable Types
+
+You can define strings, numbers, integers, decimal numbers, arrays, and objects in Javascript.
+
+##### Strings
+
+Strings are declared with straight single or double quotes.
+
+```{block}
+    var b = "hello";
+    var c = "123";
+```
+
+Both b and c are now variables that contain strings. When a number is declared as a string it is treated as character, and not a number. You convert strings to numbers and viceversa. To do this you need to call a function that turns the string into a number. For example:
+
+```{block}
+    parseInt(c)  // turns a number into an integer
+    parseFloat(c) // turns a number into a floating point decimal
+  
+```
+
+I’ve used two forward slashes in the above code. These are comments, anything written after the forward slashes is not executed as code. You can use comments to make notes in your code.
+
+##### Numbers
+
+```{block}
+    var d = 1; //creates an integer
+    var e = 4.5; //creates a floating point decimal
+  
+```
+
+##### Arrays
+
+Javascript supports arrays. Arrays are variables that contain other variables inside them. For example:
+
+```{block}
+ var h = [7,4,3,6,5,8];
+ 
+```
+
+h is now an array. The array has 6 elements inside of it. Each of these elements can be addressed using square brackets.
+
+```{block}
+    h[0]  // will return 7, the first element in the array
+    h[3] //will return 6, the fourth element in the array
+ 
+```
+
+The index for the array starts at 0, and this important to remember. Arrays can hold different types of variables inside of them, for example, numbers and strings:
+
+```{block}
+var g = ["hello",3,"test",7,5.56];
+```
+
+Sometimes you will want to create an empty array so that you can add to it later. Here’s how to define a new empty array
+
+```{block}
+    var h = new Array('');  //note this is two 's without a space not a ".
+    var h =[''];  //does the same as above
+```
+
+You can easily add new elements to this array again using bracket notation.
+
+```{block}
+    h[0] = 1;
+    h[1] = 2;
+```
+
+##### Multidimensional arrays
+
+Just as arrays can hold variables, they can also hold arrays. An array within an array is called a multidimensional array. One way to define them is:
+
+```{block}
+var i = [[1,2,3],[8,4,5],[8,2,3]];
+```
+
+Now the array i has three subarrays.You can address the elements using bracket notation.
+
+```{block}
+    i[0]  // will return the array [1,2,3]
+    i[0][0] //will return 1, which is this first element in the sub-array.
+```
+
+You can nest multiple arrays within arrays and have many dimensional arrays. When building experiments we will use arrays to store trial information coding things like trial number, stimulus information, condition information etc.
+
+##### Warnings about Javascript Arrays
+
+Array variables are referenced in Javascript in potentially unintuitive ways. For example:
+
+```{block}
+    A=[1,2,3,4,5];  //create array with five elements
+    B=A;  //put array A into B
+    B[0]=15; //set element 0 of B to 15
+ 
+```
+
+If you ran this code you might imagine that B becomes a new array that is the same as A. Then, we have replaced the first element in B with 15. However if you now look inside B and A you will see:
+
+```{block}
+    A=[15,2,3,4,5]
+    B=[15,2,3,4,5]
+ 
+```
+
+The change made to B also changed A. This has to do with how Javascript references arrays. This is important to realize when you start using arrays. This kind of referencing can work to your advantage for certain problems, or to avoid it you can use concat().
+
+```{block}
+    A=[1,2,3,4,5];
+    B=A.concat();
+    B[0]=15;
+ 
+```
+
+Now, if you look inside the variables you will see:
+
+```{block}
+    A=[1,2,3,4,5];
+    B=[15,2,3,4,5];
+ 
+```
+
+### Common operations
+
+Javascript has many built in functions that allow you to manipulate variables by changing them, adding to them, or to address variables and find out information about them.
+
+##### Finding the length of variables
+
+.
+
+A common issue is finding the length of a variable or array. You might want to know how many characters are in a string, or how many elements in an array. For this we use .length
+
+```{block}
+    var aa = "hello world";
+    aa.length //returns the number of characters in the string, 11
+    var bb = [1,2,3,4];
+    bb.length  //returns the number of elements in the array
+   
+```
+
+##### Appending to a variable
+
+Another common issue is appending to information to a variable. Javascript has a number of ways of doing this, one simple way is to use +
+
+```{block}
+    var aa = "hello world";
+    gg=aa + " hello"; // gg will contain "hello world hello"
+    aa+="hello" //this will append hello to whatever is in aa
+  
+```
+
+### Loops
+
+<div class="marginnote">
+In addition to FOR loops, Javascript supports WHILE loops that continue until a logical condition is met. Look also for the BREAK and CONTINUE statements.
+</div>
+
+Javascript uses for loops to run iterations. The loop takes a number as a starting point, and a number as an endpoint, and finally a number for each increment. The syntax is:
+
+```{block}
+    var test = new Array('')
+    for (i=0; i<=10; i++) {
+        test[i] = i+5;
+    } 
+      
+```
+
+The above line of code defines a new array called test, and initializes it to be empty. The for loop starts with the variable i at 0, it says run until i is less than or equal to 10, and i++ means to add 1 to i for each loop. This statement is contained between ( ) brackets. Next, the code in the loop is contained between { } curly brackets. Here we are simply filling elements in the array test, from 0 to 10, with numbers that equal i+5.
+
+### Logic
+
+<div class="marginnote">
+Javascript logical operators
+
+-   == equality
+-   != not equal to
+-   \> greater than
+-   \>= greater than or equal to
+-   \< less than
+-   \< less than or equal to
+-   && and
+-   || or
+</div>
+
+The syntax for logic statements is similar to that of the for loop. The following example creates a for loop that runs from 0 to 100, and gives different instructions for what to do when the loop is less than 50 and greater than 50.
+
+```{block}
+    var test = new Array('')
+    for (i=0; i<=100; i++) {
+        if (i<=50) {
+            test[i] = i+5;
+    }
+    else if (i>50) {
+        test[i] = i+10;
+    }
+    } 
+   
+```
+
+When i is less than 50 we add i+5 to the array, but when i is greater than 50 we add i+10 to the array. The basic syntax is to start with if, put the logical statement between () brackets, then put the code to follow for these conditions in { } curly brackets. You can can keep adding more else if statements, and you can also use a plain else statement that covers all remaining logical conditions.
+
+### Writing a function
+
+You can write your own functions very easily in Javascript. The following is an example of a function that sums all of the elements of array. Note, this function will only work if the array contains numbers
+
+```{block}
+    var j = [1,2,3,4,5]; //declares an array with some numbers, not part of the function
+     
+    function sumarray(t) {  
+        for (i=0; i<=t.length-1; i++){
+        tempsum+=t[i];
+        }
+    return tempsum
+    }
+     
+    sumarray(j) //returns the sum of array j
+   
+```
+
+We always start functions with the word function, next is the name of the function, in this case sumarray. You can choose any name for the function. Following the name we put () brackets, and inside these brackets we put the name of our input variable. We use any name for the input, and it generically stands for all possible inputs to our function. In this case I used the variable name t. We will refer to t later in the function. Just like for loops and if/then statements, the body of the function is contained between {} curly brackets. Inside the function is a simple for loop that starts at 0, and goes to the length of the input array (t.length-1). There is a -1 to account for the fact that the first value in the array starts at the 0 index, and the last value is the length-1. Inside the for loop is a new variable called tempsum, here we use += to have the contents of the current indexed element of the array to be added to tempsum. After the loop has finished running we want to return the sum as output. Simply tell the function to return tempsum.
+
+## Programming a simple Stroop Experiment
+
+This example covers a simple Stroop experiment, which is a good example of most trial-based experiments. Most trial-based experiments present a stimulus on screen during each trial, and require a response to the stimulus. The challenge for coding such an experiment is to display stimuli on screen, record timestamps for the onset of the stimulus, record responses to the stimulus, and record timestamps for the response.
+
+A typical Stroop experiment presents colored word stimuli on each trial, for example the word BLUE printed in blue ink (a congruent trial), or the word RED printed in green ink (an incongruent trial). The task is usually to identify the color, not the word, as fast as possible. A multi-trial experiment would usually have 100s of trials, with the stimuli on each trial randomized. In this case we will be coding an experiment with 96 trials. We will have 50% of the trials be congruent and 50% be incongruent.
+
+We start the logic of the experiment by thinking about the stimuli that we need to create, and the design that we need to implement. We need to choose the colors and words that we will use. Let’s use: red, green, yellow, and blue. With these four colors we have four possible congruent items (RR, BB, GG, YY), and 12 possible incongruent items (RG, RB, RY, BG, BY, BR, GR, GB, GY, YG, YR, YB). Thus, to ensure 50% congruent and incongruent items, we need to present all 12 incongruent at least once, and all 4 congruent stimuli 3 times each. This is a total of 24 trials. If we want more trials, to ensure a balanced design we run trials in multiples of 24 (hence, our 96 trials which is a multiple of 24).
+
+### Implementing the design
+
+When you finally run the Stroop experiment you will want several important things to happen.
+
+-   have all the trials be presented in a randomized order, or in another order that you prescribe
+
+-   have the trial information coding what happened on each trial stored to your data file.
+
+Your data file should contain as much useful information as possible so that you can reconstruct exactly what happened on each trial. For example, for each trial you want to code:
+
+-   trial number
+
+-   the stimulus that appeared, in this case the word and color that was presented
+
+-   condition information, you may want to code the kind of trial that it was (e.g., congruent vs. incongruent)
+
+-   timing information about when the stimulus was presented
+
+-   the response made to the stimulus, you can optionally encode whether the response was correct
+
+-   timing information about the response that was made.
+
+Your data file will be a complete record of what happened during the experiment. When you code your experiment it is very important to think ahead and make sure that your experiment code will create the data file that you want for final analysis.
+
+We can think of the data file as being composed of two parts. The first part codes the design of the experiment, that is what stimuli from which condition gets presented on each trial. The second part codes the results from the participant, the responses that were made to each stimulus on each trial. When coding up the experiment we are basically creating half of a data file. It will be a datafile with all of the stimulus information for each trial, but will be missing the subject’s results from each trial.
+
+We need a logical way of representing the events on each trial, for example consider the table below:
+
+   Trial    Word    Color   Condition   OnsetTime   RT   response
+  ------- -------- ------- ----------- ----------- ---- ----------
+     1      RED      RED       Con          .       .       .
+     2      BLUE     RED       Inc          .       .       .
+     3      BLUE    BLUE       Con          .       .       .
+     4     GREEN    GREEN      Con          .       .       .
+     5     YELLOW    RED       Inc          .       .       .
+
+The above table is half of a data-file, it is missing the onset times of each Stroop stimulus (when it appeared on screen), the response times for each trial, and the response key that was struck. When we finally program and run the experiment, we want to be able to save a complete datafile with all of the response information. Before that, however, we can use the first half of the data-file to control how each trial unfolds during the experiment. That is, we can use the information in the data file as part of the program of the experiment.
+
+To run a Stroop experiment you need a computer with a blank screen, then on each trial you need to tell the computer to print a Stroop stimulus to the screen and wait for a response. You can use the first half of the data file to control this behavior. The description of each trial in the data file will instruct the computer to display certain words in certain colors on certain trials.
+
+In plain language, the algorithm would accomplish something like this. You need a variable to act as a counter, this counter will start at 0, and increment by 1 on each trial. On the first trial it will be one, you can then use this information to index the datafile, that is go to line 1 of the datafile and retrieve column 1 for the word information, and column 2 for the color information. You need to figure out how to command the computer to display a “string” on screen, and to tell the computer to display the string that is in column 1 of line 1 of the data file. Then you need to tell the computer to print that string in the color that is contained in column 2 of line 1. On the next trial, the counter will be two, and using the same algorithm as above, the computer will be instructed to display the word and color contained in the columns of line 2 of the data file.
+
+### Coding the design in Javascript
+
+The above table can easily be coded directly in javascript using arrays. We can code trials in different rows of the array, and code the parameters for each trial in the columns of the array. A code snippet is below:
+
+```{block}
+    var Strooptrials = [["red","red","con"],
+    ["green","green","con"], 
+    ["red","blue","inc"],
+    ["red","yellow","inc"],
+    ["blue","red","inc"],
+    ["red","red","con"]];
+  
+```
+
+In javascript this is actually called a multi-dimensional array. This is because each line [“green”,“green”,“con”], is itself an array with 3 elements. So the above array has 6 lines, or elements, and the inner arrays each have 3 elements. Just like lines and columns. You can address or index the array using square [ ] brackets. One peculiarity about javascript arrays is that the index begins at 0, so line 1 is really 0, and the first element in an array is 0. The first trial has the word red in ink color red. You can index the array in the following way to access this information:
+
+```{block}
+    Strooptrials[0][0] // will equal red the word
+    Strooptrials[0][1] // will equal red the color
+    Strooptrials[0][2] // will equal con, the congruent condition label
+     
+    Strooptrials[2][0] // will equal red the word
+    Strooptrials[2][1] // will equal blue the color
+    Strooptrials[2][2] // will equal inc, the congruent condition label
+   
+```
+
+Eventually in the main program we will have a variable that counts the current trials. Say this variable is called i.
+
+```{block}
+    var i=0;
+  
+```
+
+We can use this variable to control the index into the Strooptrials array.
+
+```{block}
+    Strooptrials[i][0] // will equal the word from trial i
+    Strooptrials[i][1] // will equal the color from trial i
+    Strooptrials[i][2] // will equal the condition from trial i
+   
+```
+
+As i gets larger, we will cycle through all of the trials coded in the array.
+
+To make a 96 trial Stroop experiment you would want to create a variable, like Strooptrials, that has 96 lines instead of 6. You could easily do this by typing each line yourself. You could also use Javascript to help you do this. An example is below. This example starts with a Stroop trials variables that has 24 lines, coding each of the unique possible Stroop items that exist by pairing all combinations of red, green, blue, and yellow. The code then uses a function to create a new variable called trials, that allows you to have multiples of 24 trials.
+
+Here is the variable Stroopitems, containing 24 trials.
+
+```{block}
+    Stroopitems = [["red","red","con"],
+    ["blue","blue","con"],
+    ["green","green","con"],
+    ["green","green","con"],
+    ["red","red","con"],
+    ["blue","blue","con"],
+    ["green","green","con"],
+    ["green","green","con"],
+    ["red","red","con"],
+    ["blue","blue","con"],
+    ["green","green","con"],
+    ["green","green","con"],
+    ["red","blue","inc"],
+    ["red","yellow","inc"],
+    ["red","green","inc"],
+    ["blue","red","inc"],
+    ["blue","yellow","inc"],
+    ["blue","green","inc"],
+    ["green","red","inc"],
+    ["green","yellow","inc"],
+    ["green","blue","inc"],
+    ["yellow","red","inc"],
+    ["yellow","green","inc"],
+    ["yellow","blue","inc"]];
+     
+    var trials=randomizearray(createtrials(Stroopitems,4)); 
+  
+```
+
+The last line creates a new variable trials, and it uses two functions, randomizearray, and createtrials.
+
+The createtrials function simply takes an array as input, as well as a multiplier value. Then it returns a new array with multiple copies of the first array specified by the multiplier
+
+```{block}
+    function createtrials(input,ntimes) {
+        var temparray = new Array(new Array(''));
+        var iii=-1;
+        for (i=0; i<=ntimes-1; i++) {
+            for (ii=0; ii<=input.length-1; ii++){
+                iii++;
+                temparray[iii]=input[ii];
+            }
+        }
+        return temparray;
+    }
+  
+```
+
+##### Randomizing an Array
+
+The randomizearray function rearranges the order the elements in an array. We use this to shuffle the order of trials in the trial array, this way all subjects will receive different trial orders.
+
+```{block}
+    function randomizearray(t){
+        var tt= t;
+        var n = 0;
+        var a = "";
+        var b = "";
+        var i = 0;
+        for (i=0; i <= t.length-1; i++){
+            n = Math.floor(Math.random()*t.length);
+            a = tt[i];
+            b = tt[n];
+            tt[i] = b;
+            tt[n] = a;    
+        }
+        return tt;
+    }
+   
+```
+
+Running this code results in a new variable called trials, it will contain 96 trials, and all of the trials will have a randomized order. Now we really have half of a datafile, all that is missing is the responses from each. To get those, we need to program the main experiment. This involves learning how to control the display of information on screen.
+
+### Displaying trials on screen
+
+We are going to program a web-browser to present each trial on screen. This is mildly complicated because in order to do this we need to create an HTML based web-page, and then control this web-page with Javascript. We will also use a javascript library called JQUERY that allows easy control of the HTML elements.
+
+You can create an html page in any text editor by assigning the file name a .html extension instead of a .txt extension.
+
+Here’s a really simple webpage script:
+
+```{block}
+    <html>
+    <head>
+    </head>
+     
+    <body>
+     
+    <p>Hello world</p>
+     
+    </body>
+    </html>
+  
+```
+
+We are going to slowly expand this script to program our experiment. Most everything in HTML has opening and closing statements, and more opening and closing statements nested within. The overarching opening statement is \<html\> and you will see the last closing statement is \</html\>. Within this we have \<head\> \</head\>, we will insert code in here later to tell the webpage where to look for javascript code. The main webpage is coded between the \<body\> \</body\> statements. Inside here we see \<p\>Hello world\</p\>. If you ran this in a web browser, you would see the line Hello world printed to the screen. The \<p\>\</p\> statement declares a paragraph. Anything between \<p\>anythinghere\</p\> is what gets printed to the screen.
+
+IMPORTANTLY, we can treat paragraphs as variables and give them a name.
+
+```{block}
+<p id="Probe">Hello world</p>
+ 
+```
+
+Now this paragraph has an individual id or variable name called Probe. This is important, because we can use Javascript and JQUERY to control the behavior of this paragraph. We can show and hide the paragraph and change the contents of the paragraph. Our first goal will be to print a Stroop stimulus into this paragraph. Before we do that though, we need to set up Javascript and JQUERY to work with this HTML document.
+
+The following code assumes that your HTML document is located in a folder with the two following javascript files, one for jquery, and one for the creation of Stroop items described above.
+
+```{block}
+    <html>
+    <head>
+    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="StrooptrialGenerator.js"></script>
+    </head>
+    <body>
+    <p id="Probe">Hello world</p>
+    </body>
+    </html>
+ 
+```
+
+We use the header to refer to the location of the relevant .js files so that they can be used in our HTML document. These load preexisting javascript files. In our program, we will also write some javascript directly into the HTML document. To do that we include a few more lines in the header as follows:
+
+```{block}
+    <html>
+    <head>
+    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="StrooptrialGenerator.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        //our code will go here
+    });
+    </script>
+    </head>
+    <body>
+    <p id="Probe">Hello world</p>
+    </body>
+    </html>
+    
+```
+
+Notice that we have again called \<script type=“text/javascript”\>, but this time we haven’t specified a source file src=“”. Instead we will write the script directly between the opening statement \<script type=“text/javascript”\> code here \</script\>, and the closing statement.
+
+Finally, we will write our code inside the document ready function, which ensures that everything is loaded before the page is displayed. The document ready function looks like this from above:
+
+```{block}
+    $(document).ready(function(){
+        //our code will go here
+    });
+    
+```
+
+If we run the above HTML code, we will automatically create the trials variable because we will have called the .js file that executes this code. This means that by the time the webpage loads, the variable trials already exists and can be used. As well, we have already specified a paragraph that can display text and given it a name called Probe. We eventually want the contents of this paragraph to be controlled by the contents of the trials variable. To do this we will use JQUERY. As a first test of the concept, let’s write a code that will cause the first word from the first trial in variable trials to be written and displayed in the paragraph Probe.
+
+```{block}
+    <html>
+    <head>
+    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="StrooptrialGenerator.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+            $("#Probe").html(trials[0][0]);
+    });
+    </script>
+    </head>
+     
+    <body>
+    <p id="Probe">Hello world</p>
+    </body>
+    </html>
+   
+```
+
+All we have done here is added one line of code inside the document ready function. The code is:
+
+```{block}
+    $("#Probe").html(trials[0][0]);
+ 
+```
+
+This uses JQUERY, and allows information from javascript variables (e.g, trials[0][0]) to control the behavior of HTML elements. The HTML element is called using the syntax \$(“\#Probe”), and the \$(“\#Probe”).html() statement allows us to set the html contents of paragraph Probe to the contents inside the ( ) brackets. This should display the first word in the trials array in the paragraph. Notice, if you keep reloading the page, the word that is displayed should keep randomly changing, this is because of the randomizearray function that we use everytime we construct the trials array. This occurs with every page refresh.
+
+To illustrate a few more aspects of JQUERY, like hiding and showing an HTML element, and using buttons in HTML consider the next code.
+
+```{block}
+    <html>
+    <head>
+    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+     
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("#showit").click(function(){
+            $("#Probe").show();
+        });
+        $("#hideit").click(function(){
+            $("#Probe").hide();
+        });
+    });
+             
+    </script>
+    </head>
+     
+    <body>
+     
+    <p id="Probe">Hello world</p>
+    <button id="showit">show</button>
+    <button id="hideit">hide</button>
+     
+    </body>
+    </html>
+  
+```
+
+In the body of the HTML we have inserted two buttons, and given each a unique id or variable name. One is called show, and the other hide. Clicking these buttons will demonstrate how to show and hide a paragraph element in HTML. We do this in the javascript section using JQUERY.
+
+```{block}
+    $("#showit").click(function(){
+        $("#Probe").show();
+    });
+ 
+```
+
+This is the syntax for allowing a specific button click, from button showit, to execute some code. In this case the code is: \$(“\#Probe”).show(); which shows the paragraph Probe. The code is the same for the Hide button, with the exception that it causes the paragraph field to be hidden.
+
+The next steps will start to build something closer to a trial based experiment. We will have one paragraph element that used to display the Stroop stimulus, and one button that used to increment the trial counter. Clicking the button will show a new Stroop stimulus each time, simulating going from one trial to the next
+
+```{block}
+    <html>
+    <head>
+    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="StrooptrialGenerator.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+     
+    var counter = -1;
+            $("#next").click(function(){
+            counter++;
+            $("#Probe").html(trials[counter][0]);
+            $("#Probe").css("color",trials[counter][1]);
+            });
+    });
+             
+    </script>
+    </head>
+     
+    <body>
+     
+    <p id="Probe">Hello world</p>
+    <button id="next">Next Trials</button>
+     
+    </body>
+    </html>
+   
+```
+
+We’ve added a variable called counter, and initialized it to -1. We added a button called next, and written some code that controls what happens when the button is clicked. When the button is clicked, the trial counter is incremented by 1. The Probe paragraph html is set to trials[counter][0], which displays the word for the current trials, and the color of the font is set by:
+
+```{block}
+ $("#Probe").css("color",trials[counter][1]); 
+```
+
+This line also reads from the trials array to set the color.
+
+Now, clicking button presents a new trial. Next, the data should be recorded. We need to save the onset time of the Stroop stimulus, a button-press for the response, and the response time for the button press. Finally, we need to put these all together, along with the trial information (word, color, condition, trial number) in a data file. We might also implement some control in the script so that when a participant makes a response the next trial is automatically triggered.
+
+Let’s begin by recording a response, and the response time, and having that printed to a paragraph onscreen so that we can be sure we are measuring everything correctly.
+
+```{block}
+    <html>
+    <head>
+    <script type="text/javascript" src="jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="StrooptrialGenerator.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+     
+    var counter = -1;
+            $("#next").click(function(){
+            trialcounter++
+            $("#Probe").html(trials[counter][0]);
+            $("#Probe").css("color",trials[counter][1]);
+            });
+     
+    $("body").keypress(function(event){
+    d = new Date();
+    $("#responsetime").html(d.getTime() + " " + String.fromCharCode(event.which)); 
+    });
+     
+    });
+             
+    </script>
+    </head>
+     
+    <body>
+     
+    <p id="Probe">Hello world</p>
+    <button id="next">Next Trials</button>
+    <p id="Response"></p>
+     
+    </body>
+    </html>
+```
+
+Press the next trials to start a trial, press a key on the keyboard to make a response. When you press a key, the computer will display the key you pressed, and the computer time in milliseconds when you pressed it. This will be printed to paragraph Response below. A note on the timestamps. The time that is recorded in variable d is recorded when new Date() is called. The latter code d.getTime() is a method for outputting the contents of d in millisecond format. Calling for a new Date() is time sensitive, and should be placed immediately at the front of keystroke collection and immediately after stimulus presentation for precise timing.
+
+At this point the major obstacles to programming an experiment have been solved. The design of 96 Stroop trials has been captured and stored in an array. That array is used to determine the words and colors that get printed to the screen on each trial. The example shows how to program a simple paragraph element in HTML to display text, and shows how to use JQUERY to update and the change the contents of the paragraph. Finally, the Javascript code for recording time stamps is covered.
+
+All that is left is organizational and making things look pretty. One issue is to create a final data structure that can be exported after the experiment is completed. This tutorial only briefly covers this final operation as different researchers will want to code their data structures in different ways for different purposes. The important thing is that you code a data structure that preserves all of the important information, saves it in a file, and can be meaningfully interpreted during analysis at a later date.

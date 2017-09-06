@@ -1,0 +1,220 @@
+
+
+## Analysing data from a file}
+
+
+This tutorial comes with a folder containing several data files. All of these files are .txt files that you can open and view in any text editor. Each of the files has data formatted in a specific way, called long format. The first line of each file contains headers or names for each of the columns of data in the file. For example, The SingleFactor\_Between.txt file contains 61 lines of text. The first few lines should like something like this (except the text file will not include the number signs).
+
+```{r ,include=FALSE}
+AllData<-read.table("~/Documents/Latex/RFiles/SingleFactor_Between.txt",header=TRUE,sep="\t")
+```
+```{r ,}
+AllData[1:5,]
+```
+
+
+
+The Subjects column refers to individual subjects in the data file. Each number corresponds to a unique subject. The IV1 column refers to the single independent variable or factor in this data file. There are three levels: Group1, Group2, and Group3. If you scroll down the lines of the data file you will see that subjects 1-20 are associated with Group1, subjects 21-40 are associated with Group2, and subjects 41-60 are associated with Group3. The final column DV stands for the dependent variable, and the numbers in this column represent mean values for each subject in each condition.
+
+## Reading data into R}
+
+There are several ways to import data into R. We focus on using the read.table function (but see also scan). To use read.table you will need to tell R where it can find your data files. In R studio look at the bottom right panel, and find the "Files" tab. When you click on the "Files" tab you should see the current working directory. Use the file section to navigate to the folder on your computer that contains the data files. When you have succesfully done this you will see the data files listed in the bottom-right window. Now you want to set the current working directoy to this folder (that contains the data files). Choose the option "More", listed underneath the "files" tab. You should see an option to "set as working directory". Click this option. Now R will be able to find your data files.
+
+The next step is to input the data file into a variable in R. If you have correctly set the working directory then type the second line of code into the R terminal on the bottom left window of R-studio, then press enter. The first line of code shows how the working directory can be set with a script.
+
+
+```{r ,}
+setwd("~/Documents/Latex/RFiles")
+AllData<-read.table("SingleFactor_Between.txt",header=TRUE,sep="\t")
+```
+
+You should now see a variable called AllData appear in the workspace (top right window). If you type AllData into the terminal and press enter, you should see R list your data file in the terminal.
+
+## Running an ANOVA for a single-factor design between-subjects design}
+
+We have already used the aov function to conduct ANOVAs on our simulated data sets. The same function is used to anlayse data inputted into R. In this case, the data file that we have inputted is already structured in long-format, and R reads the data in as a dataframe object. So, to conduct the ANOVA we simply need to write the following:
+
+```{r ,}
+summary(aov(DV~IV1,AllData))
+```
+
+In the above print-out, the Df column refers to degrees of freedom, Sum Sq refers to the sum of squares, Mean Sq refers to Mean squared error, F-value is the F-statistic, and Pr(>F) is the p-value.
+
+We can see that the p-value is .0166, indicating significance. This means that at least one of the three groups is significantly different from the others. However, the ANOVA alone does not tell us either the means of each group, or which ones are significantly different from each other. This requires specific comparisons between levels.
+
+The summary function does not provide descriptive statistics, so we are unable to see the means for each condition. One option to view the means is to use thethe aggregate function.
+
+```{r ,}
+aggregate(DV~IV1,AllData,mean)
+```
+
+It is worth pointing out that although the summary function does not immediately display the means for each condition, it does create a data structure that represents this information. And, the means can be found using model.tables in the following way.
+
+```{r ,}
+aovResults<-aov(DV~IV1,AllData)
+print(model.tables(aovResults,"means"),digits=6)
+```
+
+
+We see that the mean for Group 1 is numerically smaller than the mean for Group 2, which is numerically smaller than the mean for Group 3. We can conclude, based on the ANOVA, that the largest and smallest means are different from each other, so we know that the mean for Group 1 was significantly smaller than the mean for Group 3. We need to perform a follow-up t-test to determine whether Group 1 is different from Group 2, and yet another test to determine if Group 2 is different from Group 3.
+
+The design is between-subjects, so the appropriate t-test is an independent samples t-test. We can conduct this test comparing groups 1 and 2 using the t.test function as follows:
+
+```{r ,}
+t.test(AllData[AllData$IV1=="Group1",]$DV,AllData[AllData$IV1=="Group2",]$DV,var.equal=TRUE)
+```
+
+
+We see that the p-value is p=0.06831, which is not <.05. So, Group 1 is not significantly different than Group 2.
+
+We can run an additional t-test comparing Group 2 and Group 3 using the following:
+
+```{r ,}
+t.test(AllData[AllData$IV1=="Group2",]$DV,AllData[AllData$IV1=="Group3",]$DV,var.equal=TRUE)
+```
+
+Again, we see that the difference is not significant (p=.284). So Group 2 is not significantly different from Group 3.
+
+
+
+
+### Writing up the results
+
+The preceding section covered the steps of loading a data-file into R. The data-file was for a single-factor between subjects design with 3 levels, and 20 subjects per level. An ANOVA revealed a significant effect, and the post-hoc t-tests showed that the only significant result was between Group 1 and 2. With all of this information in hand it is now possible to write-up a complete results section for this analysis. Here is an example:
+
+Mean reaction times for each subject in each condition were submitted to a one-way ANOVA. The main effect of group was significant, F(2,57) = 4.405, MSE = 11552, p<.016. The mean reaction times were 490 ms, 555 ms, and 589 ms, for groups one, two, and three, respectively. Follow-up comparisons showed that group one was not significantly different from group two, t(38)=1.876, p=.068. Similarly, group 2 was not significantly different from group 3, t(38)=1.086, p=.284.
+
+Running a between subjects ANOVA for a 2x2 Factorial design
+-----------------------------------------------------------
+
+The data file 2x2Factorial_Between.txt contains simulated data for a classic memory experiment performed by Godden & Baddeley (1975). The purpose of their experiment was to test the role of contextual information in guiding memory retrieval. They had different groups of subjects encode a list of words for a later memory test in one of two contexts, either on land or under water (the subjects were expert divers). Thus, the first IV was encoding context (land vs. water). In a later memory test the subjects were asked to recall as many words as possible from the list. For the subjects who encoded the words in the land context, half of the subjects performed the recall test on land, and half performed under water. The same was true for the subjects who encoded the words in the under water context. Thus, the second IV was the context of the memory test (Land vs. Water). The purpose of the experiment was to determine whether memory performance would be better when the encoding and test contexts matched (e.g., encoded and tested on land, or encoded and tested under water), compared to when the encoding and test contexts mismathced (e.g., encoded on land but tested under water, or encoded under water but tested on land).
+
+The file contains simulated data for 80 subjects. There were four total conditions, and twenty subjects completed each condition. For example, 20 subjects encoded on land and tested on land, 20 subjects encoded on land and tested under water, 20 subjects encoded on land tested under water, and 20 subjects encoded under water and tested under water. The design can be described as a 2 (Encoding context: land vs. water) x 2 (Testing context: land vs. water) between subjects experiment. The dependent variable was proportion of words correctly recalled. The proportion ranges from 0 (no words recalled) to 1 (all words correctly recalled).
+
+Let's load the data file into R, then perform the necessary statistical tests to interpret the results. The final product will be a complete results section.
+
+Load the data into R
+
+```{r}
+AllData<-read.table("2x2Factorial_Between.txt",header=TRUE,sep="\t")
+```
+
+Perform a 2x2 ANOVA
+Note: Accuracy is the name of the column in the data file representing the DV, so it is used in the aov formula. Similarly, TestContext and EncodingContext are the names of the columns representing the IVs, so they are used in the aov formula.
+
+```{r}
+summary(aov(Accuracy~TestContext*EncodingContext,AllData))
+```
+
+We can see the ANOVA produced two main effects and one interaction. The main effect for test context was not signifcant, and the main effect for encoding context was not significant. However, the interaction between encoding and test context was significant. The p-value is expressed in scientific notation, meaning that 8.79e-13 is really 0.000000000000879. This is definetly p< .05.
+
+The next step is to find the means for each main effect, and the means for the interaction.
+
+The means for main effect of test context can be found as follows:
+
+```{r}
+aggregate(Accuracy~TestContext,AllData,mean)
+```
+
+The means for the main effect of encoding context can be found as follows:
+```{r}
+aggregate(Accuracy~EncodingContext,AllData,mean)
+```
+
+The means for the interaction between test and encoding context can be found as follows:
+```{r}
+aggregate(Accuracy~TestContext*EncodingContext,AllData,mean)
+```
+
+The ANOVA shows that the only the interaction is significant. The means for the interaction effect are displayed immediately above. There are four means, corresponding to each of the ways that the encoding context is paired with the test context. The next step is to interpret the pattern of this interaction. In some sense, the question here is the same as interpreting a significant result from ANOVA on a single-factor with 4-levels. A significant result in either case indicates that at least one of the means is different from the other three, but the ANOVA itself does not specify which means are different from each other. That is, the ANOVA alone does not explain the pattern of the means.
+
+Inspecting the numbers we see what is known as a cross-over interaction. If these numbers were graphed in a line chart, we would see that the lines would cross-over. Indeed, the pattern of the cross-over interaction is exactly what was predicted. Remember, the main prediction of the study was that memory accuracy should be better when the encoding and test contexts match than when they mismatch. Memory performance was .83 and .77 in the matching conditions (land/land, water/water). Memory performance was .61 and .60 in the mismatching conditions (water/land, land/water). It is important to keep the predictions in mind when conducting the follow-up tests.
+
+There are 6 possible comparisons that can be made to fully explain the interaction pattern. For example, the means between 1&2, 1&3, 1&4, 2&3, 2&4, and 3&4 can all be submitted to separate t-tests. Sometimes it is necessary to conduct all of the possible comparisons, but usually it is only necessary to conduct the comparisons most relevant to the predictions at hand.
+
+Let's start with the subjects who encoded words on Land. They should have better memory when they were tested on land than under water. The t-test is:
+```{r}
+t.test(Accuracy~TestContext, data=AllData[AllData$EncodingContext=="Land",], var.equal=TRUE)
+```
+
+Next, the subjects who encoded words under water. They should have better memory memory when they were tested under water than on land. The t-test is:
+```{r}
+t.test(Accuracy~TestContext, data=AllData[AllData$EncodingContext=="Water",], var.equal=TRUE)
+```
+
+These two t-test verify the main predictions of the study. If you look at the original paper, you will see that the authors conducted additional tests to show that there were no significant differences between memory performance in the matching conditions (land/land vs. water/water), and no significant differences between memory performance in the non-matching conditions (land/water vs. water/land).
+
+### Writing up the results section
+
+The preceding section produced ANOVA results for a 2x2 between-subjects design, and means for each main effect and interaction, as well as follow-up tests to explain the significant interaction. With all of this information in place it is possible to write-up a complete results section. Here is an example:
+
+The mean proportions of correctly recalled words for each subject in each condition were submitted to a 2 (encoding context: land vs. water) x 2 (test context: land vs. water) between-subjects ANOVA. The main effect of encoding context was not significant, F<1. The main effect of test context not significant, F(1,76) = 1.190, MSE  = .011, p = .279. The two-way interaction between encoding and test context was significant, F(1,76) = 73.495, MSE = .011, p < .001 . Planned comparisons showed that for participants who encoded words on land, proportion recall was higher when they tested on land (.83) than under water (.61), t(38) = 7.00, p< .001. Similarly, for participants who encoded words under water, proportion recall was higher when they tested under water (.79) than on land (.60), t(38) = 5.23, p< .001.
+
+Note: The above results section is written with a few guidelines in mind. When a result is not significant some authors decide to simply state that the result was not significant. Some journals may require the author to fully report the F-value, the MSE, and the p-value for all non-significant effects. In the above example, the full report is not given for the first non-significant effect because the F-value was less than 1. In this case, it is often appropriate to simply report that F was less than one. Also notice that the means for the nonsignificant effects were not given. Some journals may require that these means are listed. At the very least it is important that all of the important means can be reconstructed. In this case, the four means from the interaction effect are individually listed; thus, it is is possible for the reader to reconstruct the means for both of the main effects.
+
+
+Practice Problems
+-----------------
+Single factor design with a within-subjects factor
+--------------------------------------------------
+The datafile is titled SingleFactor_Within.txt
+
+The data file contains simulated data for 20 subjects in a sequence learning task. The dependent variable is ReactionTime. The single independent variable is called Practice, and it has four levels, 1, 2, 3, and 4. Each level represents four different blocks of practicing the sequence. The general prediction is that reaction time should decrease across the four practice blocks. Use R to load the data file and conduct a repeated-measures ANOVA, compute the means for each of the practice blocks, and conduct the necessary paired-samples t-tests. Then write a complete results section for the example data.
+
+To get you started the necessary R commands are listed below
+
+```{r, eval=FALSE}
+AllData<-read.table("SingleFactor_Within.txt",header=TRUE,sep="\t")
+summary(aov(ReactionTime~Practice + Error(as.character(Subjects)/Practice),AllData))
+aggregate(ReactionTime~Practice,AllData,mean)
+t.test(AllData[AllData$Practice=="Block1",]$ReactionTime,AllData[AllData$Practice=="Block2",]$ReactionTime, paired=TRUE,var.equal=TRUE)
+```
+note: for the t-test, change the terms Block1 and Block2 to make other comparisons (e.g., Block3 or Block4).
+
+2x2 within-subjects design
+--------------------------
+The datafile is titled 2x2Factorial_Within.txt
+
+The data file contains simulated for 20 subjects in a Stroop task. In a Stroop task, participants are presented with color words printed in congruent or incongruent ink-colors. For example, the word blue printed in BLUE color is a congruent item. The word red printed in BLUE is an incongruent item. In the standard task, participants are instructed to identify the ink-color and ignore the word. Typically, reactions are faster for congruent than incongruent items. In this experiment, participants completed the Stroop task with two different instructions. In one phase they were presented with congruent and incongruent items, and were told to identify the ink-color and ignore the word, this is called the NameColor condition. In the other phase, participants were presented with congruent and incongruent items, and were told to identify the word and ignore the ink-color, this is called the NameWord condition. The predictions are that RTs should generally be faster for congruent than incongruent trials. Also, RTs should generally be faster for the word naming task than the color naming task. Finally, there should be an interaction between congruency and task, such that the Stroop effect (difference between incongruent and congruent items) is larger for the name color task than the name word task.
+  There are two IVS. The first IV is Congruency, with the levels Congruent and Incongruent. The second IV is Task, with the levels NameColor and and Name Word. The DV is ReactionTime. Use R to load the data file, then conduct a repeated-measures ANOVA, compute the means for each of the main effects and the interaction, and conduct any necessary paired-sample t-tests. Then write a complete results section for the example data.
+
+To get you started here are the neccessary R commands:
+
+```{r,eval=FALSE}
+AllData<-read.table("2x2Factorial_Within.txt",header=TRUE,sep="\t")
+summary(aov(ReactionTime~Task*Congruency + Error(as.character(Subjects)/(Task*Congruency)),AllData))
+```
+You can also put the results of the aov into a variable
+```{r,eval=FALSE}
+aovResult<-aov(ReactionTime~Task*Congruency + Error(as.character(Subjects)/(Task*Congruency)),AllData)
+```
+Then you can print all of the means for the main effects and interactions using the following:
+```{r,eval=FALSE}
+model.tables(aovResult,"means")
+```
+
+Loading raw-data into R
+-----------------------
+
+Using R to analyze the results from real experiments requires that raw data-files are loaded into R and then transformed into a long-format data frame. Depending on how the raw data is formatted this process can be fairly straightforward, or not. The following provides an example of how to load multiple subjects data files into R and then complete an analysis. The example is taken from a Stroop experiment conducted in PsychoPy. Each subject's data file is saved as separate .csv files (comma separated value). Each .csv file contains the raw data from a 24 trial Stroop experiment with 12 congruent and 12 incongruent items. The data files are already organized in long-format. The first row contains the columns headers, and each remaining row contains the raw data for each trial. The data files are named Subject1.csv, Subject2.csv, and so on.
+
+The following `read.table` will load a single file into a datafram. However, the working directory must first be set to the location of the file.
+
+```{r,eval=FALSE}
+Subject1<-read.table("PsychoPyStroop.csv",header=TRUE,sep=",")
+```
+
+The ultimate goal here is to load in all 8 subjects worth of data into a single dataframe. This is done using a for loop in R.
+
+```{r}
+fnames<-c("Subject1.csv","Subject2.csv","Subject3.csv","Subject4.csv","Subject5.csv","Subject6.csv","Subject7.csv","Subject8.csv")
+AllSubjectData<-data.frame()
+for (i in 1:length(fnames)){
+  SubjectData<-read.table(fnames[i],header=TRUE,sep=",")
+  AllSubjectData<-rbind(AllSubjectData,SubjectData)
+}
+CongruencyMeans<-aggregate(KeypressTime.rt~participant*congruency,data=AllSubjectData,mean)
+ANOVAresults<-aov(KeypressTime.rt~factor(congruency) + Error(as.character(participant)/factor(congruency)),CongruencyMeans)
+summary(ANOVAresults)
+model.tables(ANOVAresults,"means")
+```

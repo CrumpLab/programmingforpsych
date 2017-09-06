@@ -1,0 +1,497 @@
+
+##Creating a sample distribution}
+
+R has several built-in functions for sampling from different kinds of distributions. This makes it very easy to create simulated data. You can access these functions by typing "distribution" into R's help. Because all of the examples involving simulating data will also involve sampling from distributions, it is worth spending some time on sampling from different distributions.
+
+### Sampling random numbers (uniform distribution)}
+
+R generate lists of random numbers between a minimum and maximum value. One definition of a random number is the idea of a uniform distribution. In a uniform distribution, all of the possible numbers in the range have an equal chance of occurrence. The following code samples 100 numbers from the range between 0 and 100, using the runif function.
+
+The syntax for runif is:
+
+```{r ,eval=FALSE}
+runif(n, min = 0, max = 1)
+```
+n is the number of samples. The min and max are the lower and upper limits of the distribution. Here is the runif function in action.
+
+```{r ,}
+RandomNumbers <- runif(100, min = 0, max = 100)
+```
+
+Typing the above line into the terminal will sample 100 numbers betwen 0 and 100 and place them into the variable named RandomNumbers. If you then type RandomNumbers into the terminal and press enter, you will see the contents (all of the 100 numbers) displayed in the R terminal. By changing the values in the function you can make your sample of numbers any size, and make the range any size.
+```{r ,}
+RandomNumbers
+```
+
+It is also very easy to view these numbers graphically. For example, you might to see if your sample actually looks like a uniform distribution. One way to do this would be to create a histrogram that shows the frequency of each number according to different bin sizes (e.g., frequency of numbers between 0 and 10, 11 and 20, and so on). If the sample is a uniform distribution, then the bars of the histogram ought to be approximately the same height (e.g., flat and uniform). A histogram can be created using the function hist.
+
+```{r ,fig.width=4,fig.height=4}
+hist(RandomNumbers)
+```
+Notice that some of the bars are higher than others, but overall the distribution is relatively flat and uniform. The fact that the distribution is not perfectly uniform shows that a sample distribution does not always look exactly like the parent distribution. This variability in the sample is due to chance. The effect of chance can be reduced by taking a larger sample. For example, the above code could be modified to sample 10,000 numbers rather than 100 numbers. This larger sample ought to produce a histogram that shows a more flat and uniform distribution. An example of a histogram for such a sample is shown below:
+
+```{r ,fig.width=4,fig.height=4}
+RandomNumbers <- runif(10000, min = 0, max = 100)
+hist(RandomNumbers)
+```
+There is still some variability in the height of the bars, but overall this larger sample appears to have a more flat and uniform distribution. Again, this means that each of the numbers in the distribution have an equal chance occurrence. All of the other distributions covered here involve non-uniform distributions, where each value in the population has different likelihoods of occurrence.
+
+### Sampling from a normal distribution}
+
+The normal distribution (or bell-curve) can be sample by using the function rnorm. The syntax for rnorm is:
+
+```{r ,eval=FALSE}
+rnorm(n, mean = 0, sd = 1)
+```
+n is the number of samples, the mean is center of the distribution, and sd is the standard deviation of the distribution.
+
+Let's take 100 samples from a normal distribution with mean =100, and sd = 50, and plot the result in a histogram.
+
+```{r ,fig.width=4,fig.height=4}
+normalSample <- rnorm(100, mean = 100, sd = 50)
+hist(normalSample)
+```
+
+The above histogram shows a bell-like curve typical of a normal distribution. If we take a much larger sample of 10,000 numbers, the bell-like curve will become even more apparent.
+
+```{r ,fig.width=4,fig.height=4}
+hist(rnorm(10000, mean = 100, sd = 50))
+```
+
+### Other distributions}
+
+R has functions for many other different kinds of distributions, including exponential, power, weibull, and many others. You can find the functions for these distributions in the help section. We will use the normal distribution for the tutorials here.
+
+##Simulating a coin toss}
+
+If you flip a fair coin 10 times, what are chance that you get 5 heads and 5 tails? What are the chances that you get 4 heads and 6 tails? What are the chances of the other possible combinations? We could figure out the answer mathematically, or we could use R to simulate the results of a coin toss. This simulation will demonstrate the use of loops in R. If you want to give yourself a challenge, which you should, then stop here and try to figure out how to solve this problem yourself before reading on.
+
+The strategy for the simulation will involve the following steps. 1) flip a coin 10 times, 2) count the number of heads, and save the result, 3) repeat steps 1 and 2 several thousand times. Step 3 will produce a distribution showing how many times 1 heads, 2 heads, 3 heads, and so on occurred when a coin is flipped 10 times.
+
+We already know how to sample from a uniform distribution, so let's apply this knowledge to simulate flipping a coin 10 times. We can sample 10 numbers from a distribution between 0 and 1. Then we can evaluate each number. If it is <=.5 we will call it a tails, and >.5 a heads.
+
+```{r ,eval=FALSE}
+coinToss <- runif(10, min=0, max=1)
+```
+Then, we can use the round function to convert the decimal values into 0s or 1s.
+```{r ,eval=FALSE}
+coinToss <- round(coinToss)
+```
+Then, we can use the sum function to yield the total number of heads.
+```{r ,eval=FALSE}
+totalHeads <- sum(coinToss)
+```
+In fact, all of these operations could be done on one line in R.
+```{r ,eval=FALSE}
+totalHeads <- sum(round(runif(10, min = 0, max = 1)))
+```
+The next step is to use a loop in R to simulate a large number of cases where a coin is flipped 10 times, store the results of each set of flips, and then plot the histogram.
+```{r ,fig.width=4,fig.height=4}
+allHeads <- c()
+for (i in 1:10000) {
+  totalHeads <- sum(round(runif(10, min = 0, max = 1)))
+  allHeads <- c(allHeads,totalHeads)
+}
+hist(allHeads)
+```
+The above histogram shows the frequency of getting 0, 1, 2, 3 and so on heads out of 10 coin flips for 10,000 simulations.
+
+The histogram function has an option to graph a probability density function as follows:
+```{r ,fig.width=4,fig.height=4}
+hist(allHeads,freq=FALSE)
+```
+
+The hist function has several options that you can configure. Notice that the two histograms above have gaps between the bars. For this histogram, R has automatically created bins of size .5. So, it is attempting to produce a bar at 0, .5, 1, 1.5, 2, and so on. The size of the bin is called breaks and can be set by the user. In this simulation there are 11 possible outcomes (0,1, 2, 3, 4,5 6, 7, 8, 9, or 10 heads), so it makes sense to set the breaks to 11.
+```{r ,fig.width=4,fig.height=4}
+hist(allHeads, freq = FALSE, breaks = 11)
+```
+
+A few other points are worth mentioning about the hist function. It is possible to save the results of the hist function to a variable or object. For example, we could use:
+```{r ,fig.width=4,fig.height=4}
+x<-hist(allHeads, freq = FALSE, breaks = 11)
+```
+This line creates a variable x, and saves the results of the hist function to x. The variable x now contains the numerical details of the histogram. You can inspect these by typing x into the terminal and pressing enter. You should see a result like following:
+
+```{r ,}
+x
+```
+Each of the variables with a \$ represent different components of the histogram. We can see that the breaks or bins are divided equally between 0 and 10, we can see the raw counts of number of heads in each bin, and we can see the probabilities for each number of heads in the density variable. Each of these variables can be listed individually.
+```{r ,eval=FALSE}
+x$breaks
+x$counts
+x$density
+```
+The above lines of code show how to output each of the variables contained within the object x that is storing the results of the histogram. This basic idea will apply to data frames that will be encountered later when simulating more complex experimental designs.
+
+## t-test:Data Simulation and Analysis}
+### Simulating a one-sample t-test}
+
+The purpose of a one-sample t-test is to determine whether the mean of a sample is statistically different from a population mean. Simulating the data simply involves taking some number of samples from a distribution, and then running a t-test to determine if the mean of the sample if different some other mean.
+
+Consider simulating the test scores from a class of 10 students who completed a true/false quiz. Each of the students will have a percentage on their test. So, their test scores could range between 0 and 100\%. One question to ask of these test scores is whether they are on average different from chance. If all of the students were guessing, the mean of all of the test scores should be not be statistically different from 50. If the students performed above chance then the mean of their scores should be significantly above 50. If we assume that the test scores are distributed normally, then it is possible to simulate 10 scores using the now familiar rnorm function (to sample from the normal distribution.
+
+Let's create a sample that assumes the students were guessing. This sample will have 10 scores, with a mean of 50. Let's set the standard deviation to 20.
+```{r ,}
+testScores <- rnorm(10, mean = 50, sd = 20)
+```
+The above line of code will sample 10 numbers from the normal distribution above. However, there is a potential problem that needs to be addressed. It is possible for the rnorm function to sample numbers larger than 100 and smaller 0. These would be unlikely extreme values that are several standard deviations away from the mean, nevertheless they could be included in the sample. To address this problem, we can use logical operators in R to find and replace any numbers larger than 100 with the value 100, and any number smaller than 0 with the value 0.
+```{r ,}
+testScores[testScores > 100] <- 100
+testScores[testScores < 0] <- 0
+```
+Now the variable testScores will only contain numbers between the range 0-100.
+
+One first question is to determine the mean of sample. Use the mean function.
+```{r ,}
+mean(testScores)
+```
+The next step is to perform a one-sample t-test to determine if the mean of the sample if statistically different from 50. A one-sample t-test can be computed using the t.test function.
+```{r ,}
+t.test(testScores,mu=50)
+```
+In the above, mu refers to the population mean. Most likely the t-test will return a non-significant p-value. This makes sense because the sample was taken from a distribution with a mean of 50, so the sample mean should not be different from 50. However, because the number of samples was small (only 10), it is possible by chance alone to find a significant result.
+Let's create a different sample of test scores with a mean of 80, and run a one-sample t-test.
+
+```{r ,}
+testScores <- rnorm(10, mean = 80, sd = 20)
+testScores[testScores > 100] <- 100
+testScores[testScores < 0] <- 0
+t.test(testScores, mu = 50)
+```
+In this case, the t-test will usually return a significant result, and this makes sense because the sample was drawn from a distribution with a mean of 80, not 50. However, even though we sampled from a distribution with mean 80, it is possible by chance alone that the t-test will return a non-significant result. The main factors that influence whether or not a one-sample test returns a significant result are: 1) the size of the difference between the sample and population mean, 2) the number of subjects or scores in the sample, 3) the variance of the sample. Larger differences, larger number of subjects, and smaller variances all lead to significant differences. Smaller differences, smaller number of subjects, and larger variance all lead to non-significant differences.
+
+### Simulating an independent samples t-test (two groups, between-subjects)}
+
+The independent samples t-test is used to compare the differences between two groups of scores, specifically for between-subjects designs.
+
+Consider a simple reaction time experiment where participants are asked to detect the onset of a light as fast as possible. In this experiment one group of 20 subjects performs the task after drinking alcohol. As well, a  control group of 20 different subjects performs the task without drinking alcohol. The prediction is that mean reaction time should be slower for the alcohol group than the control group.
+
+To simulate the data we need to create two samples of 20 fictitious reaction times, one for the alcohol group and one for the control group, and then perform an independent samples t-test. When creating the samples for each group it is important to set the means of the sample distribution to reflect the predictions of the design. The choice of means and standard deviations is somewhat arbitrary, and requires educated guessing. When simulating the data from an existing experiment, a good educated guess is the means and standard deviations reported in the manuscript. In this case, the particular numbers are chosen based on the fact that normal reaction times in a simple detection task are around 150 ms. We will use the rnorm function to create simulated reaction times.
+
+```{r ,}
+Alcohol <- rnorm(20, mean = 250, sd = 100)
+Control <- rnorm(20, mean = 150, sd = 100)
+```
+Reaction times have a lower limit of 0ms, and no upper limit. So, it is important to ensure that none of the numbers in each of the reaction time samples are smaller than zero.
+```{r ,}
+Alcohol[Alcohol < 0] <- 0
+Control[Control < 0] <- 0
+```
+The next step is to conduct the independent samples t-test. This is done again using the t.test function (note: the syntax is slightly different from the one-sample test).
+```{r ,}
+t.test(Alcohol,Control)
+```
+
+Note the title of the t-test is called the Welch Two Sample t-test. This is the default t-test in R. If you were to run a t-test on the same scores in excel or SPSS, you find slightly different values. This is because the Welch test involves a statistical correction. It is possible to get the standard student's t-test by setting the var.equal parameter as follows:
+```{r ,}
+t.test(Alcohol,Control, var.equal = TRUE)
+```
+
+As you can see the results of the different versions of the t-tests are small. But, it is still a good idea to know which t-test you are performing. For all future t-tests in this tutorial, we will use the standard version, and always remember to set var.equal = TRUE. The t.test function has several other parameters that can be set (e.g., running a one vs. two-tailed test). These options can be found by looking up t.test in R help.
+
+### Simulating a paired samples t-test (two conditions, within-subjects)}
+
+A paired samples t-test is used for comparing data from two conditions in a within-subjects design (the same subjects contribute data to both of the conditions).
+
+Imagine a learning experiment where 20 participants are asked to learn to type on a new computer keyboard with all of the keys re-arranged. They spend 1 hour practicing on day 1, and then 1 hour practicing on day 2. The prediction is that typing speeds will become faster with practice. So the mean typing speeds should be slower on day 1 than day 2. One measure of typing speed is words per minute. Skilled typists can type on average 65 WPM and up to over 100-200 WPM. The participants in this experiment will be starting from scratch, so let's assume the mean WPM on day 1 will be around 20, and that they will make modest improvements to around 30 WPM on day 2. First, create two samples of 20 scores reflecting these predictions using rnorm.
+
+```{r ,}
+day1<-rnorm(20, mean = 20, sd = 5)
+day2<-rnorm(20, mean = 30, sd = 5)
+```
+These scores both have a lower limit of 0, so let's ensure that all negative numbers are set to 0.
+```{r ,}
+day1[day1<0]<-0
+day2[day2<0]<-0
+```
+Next, look at the means.
+```{r ,}
+mean(day1)
+mean(day2)
+```
+Finally, compute the paired-samples t-test using the t.test function. This will be the same as before, except the option for a paired test will be set to TRUE.
+```{r ,}
+t.test(day1, day2, var.equal=TRUE, paired=TRUE)
+```
+
+### Generality of the t-test examples}
+
+The above examples illustrate specific cases of simulating and analyzing data for one-sample, independent sample, and paired-sample t-tests. The code can be extended to simulate data for any kind of experiment or set of data that should be analyzed by these tests. The only changes that need to be made are the names of the variables, and the predictions for the number of subjects, and means, standard deviations, or other parameters of the sampling distribution chosen to model the data.
+
+##Formatting data in R for more complex designs}
+
+The remaining portion of this tutorial covers simulating and analyzing data for between and within-subjects single factor designs, multi-factor designs, and mixed designs. All of these simulations will use the aov function to run ANOVAs on the simulated data. The aov function, like many other statistical functions in R, requires the data to be formatted in a specific fashion known as long-format. The data should also be stored in a particular kind of variable known in R as a data frame. Before continuing, it is worth discussing this kind of data formatting because it is fundamental to all of the remaining simulations. A complete understanding of formatting data in R will allow the user to create simulated data for most any design and conduct appropriate analyses on the simulated data.
+
+Experimental designs involve manipulations and measurements. The manipulations are described by independent variables, and the measurements refer to dependent variables. Every independent variable has at least two levels, and possibly many more. In balanced designs there is one measurement (DV) for each of the levels of the independent variables. Thus, in order to represent the results of an experiment, it is necessary to organize the data so that the measurement for each level of each independent variable can be identified. Data is typically organized either in wide or long-format.
+
+Here is an example of a wide-format organization for a single-factor design with 3 levels. It is a within-subjects design with 5 subjects.
+
+```{r ,eval=FALSE}
+Subjects  L1	L2	L3
+1		5	5	10
+2		7	6	10
+3		10	8	10
+4		9	10	9
+5		9	6	8
+```
+The wide-format has four columns. The first column is for Subjects, and the remaining columns are for each of the levels of the independent variable. Each of the rows under the Subjects column refer to each of the 5 subjects, and the numbers under the columns Level 1 to 3 represent the measurements or dependent variable. This format perfectly preserves each of the measurements and assigns each measurement to a particular subject in a particular condition.
+
+Here is an example of the same data organized in long-format.
+
+```{r ,eval=FALSE}
+Subjects  IV	DV
+1		L1	5
+2		L1	7
+3		L1	10
+4		L1	9
+5		L1	9
+1		L2	5
+2		L2	6
+3		L2	8
+4		L2	10
+5		L2	6
+1		L3	10
+2		L3	10
+3		L3	6
+4		L3	9
+5		L3	8
+```
+A defining feature of long-format data is that the DV is stored down the rows of a single column. This can lead to very long tables of data, especially when the design has many subjects and IVs with numerous levels.
+
+In the above example, there is a single column for the subjects factor, a single column for the IV factor, and a single column for the DV. There is an important difference between the columns representing factors (Subject and IV) and the column representing the data or DV. The difference is that all of the numbers in the DV represent unique observations in each of the conditions. However, notice that terms in the rows of the subject and IV columns repeat. For the subject column, the numbers 1 to 5 are repeated three times. This is necessary because each of the subjects participates in each of the three conditions of the IV. Notice also that the terms for Level1, 2 and 3 are repeated 5 times each (once for each subject).
+
+For each of the following simulations we will be constructing our own sets of data in long format. For each simulation it will be necessary to determine the total number of subjects, the total number of levels for each IV, and the total number of observations of the DV. These constraints will be used to create and organize each of the data sets.
+
+## Single Factor ANOVAs: Data-Simulation and Analysis}
+
+### Simulating data for a one-way within subjects ANOVA with 3 levels}
+
+Let's continue with the example of a simple practice study having participants learn to type on a new keyboard. In the paired sample t-test, participants practiced for one hour on day 1 and day 2. Let's extend this design by including a day 3. Imagine the design involves 20 participants, and the DV is words per minute (WPM).
+
+The first question is to determine the number of observations of the DV. The design has one IV with 3 levels, and 20 participants. Each participant contributes data to each of the levels. Thus, the number of observations is 3 x 20 = 60. This means that the column representing the DV will have 60 total numbers, one for each subject in each condition.
+
+The first step is to simulate the data for each of the days. We can use the same formulas used from the paired sample t-test.
+```{r ,}
+day1 <- rnorm(20, mean = 20, sd = 5)
+day2 <- rnorm(20, mean = 30, sd = 5)
+day3 <- rnorm(20, mean = 40, sd = 5)
+```
+Don't forget to set the negative numbers to 0.
+```{r ,}
+day1[day1 < 0] <- 0
+day2[day2 < 0] <- 0
+day3[day3 < 0] <- 0
+```
+We now have three variables representing the mean words per minute for each subject for each day of practice. We can assume that the first number in each variable represents subject 1, the second number subject 2, and so on.
+
+The next step is to combine each of these variables into a single variable that will eventually become a column representing all of the observations for the DV. This is simple in R.
+```{r ,}
+WPM <- c(day1,day2,day3)
+```
+If you type the newly created variable WPM into the terminal and press enter, you will see a single list of 60 numbers. As the programmer, you know that the first 20 numbers represent the DV values for subjects 1-20 on day1, the 21-40th numbers represent the DV values for subjects 1-20 on day 2, and the 41-60th numbers represent the DV values for subjects 1-20 on day 3.
+
+The next step is to create a variable that represents the subject factor. This variable should list the numbers 1-20 three times in a row. The R function seq is a convenient tool
+
+```{r ,}
+seq(1,20)
+```
+
+Use `seq` to make the list of 1-20 repeat three times.
+```{r ,}
+Subjects <- c(seq(1,20), seq(1,20), seq(1,20))
+```
+If you type Subjects into the terminal you will see the numbers 1-20 listed three times. Alternatively, you could combine the `rep` and `seq` functions.
+```{r ,}
+Subjects<-rep(seq(1,20),3)
+```
+
+The Subjects variable is currently composed of 60 numbers. We will eventually be using the aov function to perform an ANOVA on our simulated data, and this function requires that the subject variable be treated as a factor in the ANOVA. This requires that we transform the Subjects variable into a different type of variable, that has the factor class. The current class of Subjects is integer. You can determine the class of a variable by:
+```{r ,}
+class(Subjects)
+```
+
+We can change Subjects into a factor class by:
+```{r ,}
+Subjects<-factor(Subjects)
+```
+Now if you look at `class(Subjects)`, you should see that is `"factor"`. If a variable in R contains numbers it is not automatically given the factor class, so that class must be assigned in the script.
+
+We now have a variable called WPM that represents the DV, and a variable Subjects that represents the subject factor. The remaining factor is the IV for practice. This has three levels, day1, day2, and day3. Given the way we have organized the data in the WPM variable, we know that the first 20 numbers are for day1, the second 20 numbers are for day 2, and the final set of 20 numbers are for day 3. Thus, we need to create a variable with the term day1 listed 20 times, followed by the term day2 listed 20 times, and then the term day3 listed 20 times. It is easy to do this using the function rep.
+```{r ,}
+rep("day1",20)
+```
+
+The Practice factor can be created in the following way:
+```{r ,}
+Practice <- c(rep("day1",20), rep("day2",20), rep("day3",20))
+```
+If you now type Practice into the terminal you should see a list of 60 items, with day1 20 times, day2 20 times, and day3 20 times.
+
+We have now created variables for every aspect of the design (Subjects, Practice, WPM). The next step is to combine these variables into a long-format table. This is done using the data.frame function. Data needs to be converted into a data frame format before using the aov function to compute the ANOVA. Fortunately, this is very easy. Let's create the data frame and put it into a new variable called AllData
+```{r ,}
+AllData <- data.frame(Subjects,Practice,WPM)
+```
+If you type AllData into the terminal, then you should see all of the simulated data presented in a long-format table. The first column will show the subject variable, with the numbers 1-20 repeated three times. The second column should show the Practice variable, with the names of each of the levels repeated 20 times each, and the third column should show the WPM variable, with 60 total observations.
+
+The final step is to perform the one-way ANOVA. This will provide a test to determine whether there is a significant difference between the levels of the practice factor. Luckily, once the data has been formatted into a data frame, the ANOVA can be computed in one line of code using the aov function. Just like we did with the hist function, let's store the results of aov function into a variable called ANOVAresults.
+```{r ,}
+ANOVAresults <- aov(WPM~Practice + Error(Subjects/Practice), AllData)
+```
+Next, use the summary function to print the results of ANOVA to the terminal.
+```{r ,}
+summary(ANOVAresults)
+```
+```{r ,}
+model.tables(ANOVAresults,"means")
+```
+
+Here is all the code for the simulation in one complete script:
+```{r ,eval=FALSE}
+day1<-rnorm(20, mean = 20, sd = 5)
+day2<-rnorm(20, mean = 30, sd = 5)
+day3<-rnorm(20, mean = 40, sd = 5)
+day1[day1<0]<-0
+day2[day2<0]<-0
+day3[day3<0]<-0
+WPM<-c(day1,day2,day3)
+Subjects<-c(seq(1,20), seq(1,20), seq(1,20))
+Subjects<-factor(Subjects)
+Practice<-c(rep("day1",20), rep("day2",20), rep("day3",20))
+AllData<-data.frame(Subjects,Practice,WPM)
+ANOVAresults<-aov(WPM~Practice + Error(Subjects/Practice), AllData)
+summary(ANOVAresults)
+model.tables(ANOVAresults,"means")
+```
+This code can also be rewritten in a more compact form, for example:
+```{r ,eval=FALSE}
+WPM<-rnorm(60,c(20,30,40),5)
+WPM[WPM<0]<-0
+Subjects<-factor(rep(seq(1,20),each=3))
+Practice<-rep(c("day1","day2","day3"),20)
+AllData<-data.frame(Subjects,Practice,WPM)
+ANOVAresults<-aov(WPM~Practice + Error(Subjects/Practice), AllData)
+summary(ANOVAresults)
+model.tables(ANOVAresults,"means")
+```
+
+### Simulating data for a one-way between subjects design with 3 levels}
+
+Consider the following between-subjects design with 60 subjects. The task is a memory experiment. Participants in the encoding phase read a list of 20 words, and are given a later test to recall as many words from the list as possible. The IV is the amount of time between the encoding phase and the test phase, and termed Delay. Group 1 is given the memory test immediately after reading the word list. Group 2 is given the memory test 1 hour after reading the word list. Group 3 is given the memory test 2 hours after reading the word list. Each group is composed of 20 different subjects. The prediction is that memory recall performance should decrease with longer delays. Group 1 should perform better than Group 2. And Group 2 should perform better than Group 3.
+
+The DV could be the number of words recalled, this number would range between 0 and 20. There are 20 subjects and 2 conditions, so the DV should have 60 observations. The variables for the DV, and Subjects and Delay factors can be constructed in a similar manner to the previous example. The major difference being that the Subjects factor will contain the numbers 1-60, reflecting the fact that 60 different subjects completed the experiment. The following code creates the complete data frame and runs the ANOVA.
+
+```{r ,eval=FALSE}
+Recall<-c(rnorm(20,mean=17,sd=3),rnorm(20,mean=15,sd=3),rnorm(20,mean=12, sd=3))
+Recall[Recall>20]<-20
+Recall[Recall<0]<-0
+Subjects<-factor(seq(1,60))
+Delay<-c(rep("Immediate",20), rep("1Hour",20), rep("2Hour",20))
+AllData<-data.frame(Subjects,Recall,Delay)
+ANOVAresults<-aov(Recall~Delay, AllData)
+summary(ANOVAresults)
+model.tables(ANOVAresults,"means")
+```
+
+##Using the aov function for within or between-subjects designs}
+
+The aov function is used for within, between and mixed design ANOVAs. The aov formula has the following syntax:
+```{r ,eval=FALSE}
+aov(formula,dataframe)
+```
+dataframe refers to the name of the variable containing the data. The formula parameter defines the nature of the ANOVA. Here are some examples of the formula for different single and multi-factor between subject designs. The term DV will refer the name of the dependent variable, and IV for the name of the independent variable.
+
+### Between subjects ANOVA formulas}
+
+#### {Single-factor design}
+```{r ,eval=FALSE}
+aov(DV~IV, dataframe)
+```
+#### {2 IVs}
+```{r ,eval=FALSE}
+aov(DV~IV1*IV2, dataframe)
+```
+#### {3 IVs}
+```{r ,eval=FALSE}
+aov(DV~IV1*IV2*IV3, dataframe)
+```
+
+The main differences between these formulas are the additional IV variables. Each additional variable is multiplied to the others.
+
+The aov formula changes in an important way for within-subjects designs. This is because within-subjects designs use an error term that incorporates the Subjects variable. This error term needs to be explicitly defined in the aov formula. It is also important that the subjects variable in the dataframe is defined as a factor. Here are some examples:
+
+### Within subjects ANOVA formulas (all factors within)}
+
+#### {Single-factor design}
+```{r ,eval=FALSE}
+aov(DV~IV + Error(Subjects/IV), dataframe)
+```
+#### {2 IVs}
+```{r ,eval=FALSE}
+aov(DV~IV1*IV2 + Error(Subjects/IV1*IV2), dataframe)
+```
+#### {3 IVs}
+```{r ,eval=FALSE}
+aov(DV~IV1*IV2*IV3 + Error(Subjects/IV1*IV2*IV3), dataframe)
+```
+
+### Mixed design ANOVAs with between and within factors}
+
+For these examples IVB will refer to between subject variables, and IVW will refer to within subjects variables
+
+#### {One between IV and one within IV}
+```{r ,eval=FALSE}
+aov(DV~IVB*IVW + Error(Subjects/IVW), dataframe)
+```
+#### {One between IV and two Within IVs}
+```{r ,eval=FALSE}
+aov(DV~IVB*IVW1*IVW2 + Error(Subjects/(IVW1*IVW2), dataframe)
+```
+#### {Two between IVs and two Within IVs}
+```{r ,eval=FALSE}
+aov(DV~IVB1*IVB2*IVW1*IVW2 + Error(Subjects/(IVW1*IVW2)+(IVB1*IVB2), dataframe)
+```
+note: in this last example an additional error term is added for the interaction between the two between subject variables.
+
+## Simulating data for multi-factor designs}
+
+### 2x2 between subjects design}
+
+The following code assumes 20 subjects per group (80 total). IV1 has two levels. IV2 has two levels.
+
+```{r ,eval=FALSE}
+DV<-rnorm(80,c(100,200,300,400),sd=10)
+IV1<-rep(c("level1","level2"),each=2,20)
+IV2<-rep(c("level1","level2"),each=1,40)
+AllData<-data.frame(DV,IV1,IV2)
+ANOVAresults<-aov(DV~IV1*IV2, AllData)
+summary(ANOVAresults)
+model.tables(ANOVAresults,"means")
+```
+
+### 2x2 within subjects designs}
+
+The following code assumes 20 subjects participating in each condition. IV1 has two levels. IV2 has two levels.
+```{r ,eval=FALSE}
+Subjects<-factor(rep(seq(1,20),each=4))
+DV<-rnorm(80,c(100,200,300,400),sd=10)
+IV1<-rep(c("level1","level2"),each=2,20)
+IV2<-rep(c("level1","level2"),each=1,40)
+AllData<-data.frame(DV,IV1,IV2)
+ANOVAresults<-aov(DV~IV1*IV2 + Error(Subjects/(IV1*IV2)), AllData)
+summary(ANOVAresults)
+model.tables(ANOVAresults,"means")
+```
+
+### 2x2 mixed design (1 within, 1 between)}
+
+The following code assumes 40 total subjects. 20 participate in each level of IVB, and all participate in each level of IVW. IVB has two levels, IVW has two levels
+```{r ,eval=FALSE}
+Subjects<-factor(c(rep(seq(1,40),each=2)))
+DV<-rnorm(80,c(100,200,300,400),sd=10)
+IVB<-rep(c("level1","level2"),each=2,20)
+IVW<-rep(c("level1","level2"),each=1,40)
+AllData<-data.frame(DV,IVB,IVW)
+ANOVAresults<-aov(DV~IVB*IVW + Error(Subjects/(IVW)), AllData)
+summary(ANOVAresults)
+model.tables(ANOVAresults,"means")
+```
