@@ -162,8 +162,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.1.3" data-path="programming-challenges-i-learning-the-fundamentals.html"><a href="programming-challenges-i-learning-the-fundamentals.html#use-comments."><i class="fa fa-check"></i><b>3.1.3</b> Use comments.</a></li>
 <li class="chapter" data-level="3.1.4" data-path="programming-challenges-i-learning-the-fundamentals.html"><a href="programming-challenges-i-learning-the-fundamentals.html#r-markdown."><i class="fa fa-check"></i><b>3.1.4</b> R Markdown.</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="programming-challenges-i-learning-the-fundamentals.html"><a href="programming-challenges-i-learning-the-fundamentals.html#easier-problems"><i class="fa fa-check"></i><b>3.2</b> Easier Problems</a></li>
-<li class="chapter" data-level="3.3" data-path="programming-challenges-i-learning-the-fundamentals.html"><a href="programming-challenges-i-learning-the-fundamentals.html#harder-problems"><i class="fa fa-check"></i><b>3.3</b> Harder Problems</a></li>
+<li class="chapter" data-level="3.2" data-path="programming-challenges-i-learning-the-fundamentals.html"><a href="programming-challenges-i-learning-the-fundamentals.html#use-hypothesis-to-annotate-your-solutions"><i class="fa fa-check"></i><b>3.2</b> Use Hypothesis to annotate your solutions</a></li>
+<li class="chapter" data-level="3.3" data-path="programming-challenges-i-learning-the-fundamentals.html"><a href="programming-challenges-i-learning-the-fundamentals.html#easier-problems"><i class="fa fa-check"></i><b>3.3</b> Easier Problems</a></li>
+<li class="chapter" data-level="3.4" data-path="programming-challenges-i-learning-the-fundamentals.html"><a href="programming-challenges-i-learning-the-fundamentals.html#harder-problems"><i class="fa fa-check"></i><b>3.4</b> Harder Problems</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="dealing-with-data.html"><a href="dealing-with-data.html"><i class="fa fa-check"></i><b>4</b> Dealing with Data</a><ul>
 <li class="chapter" data-level="4.1" data-path="dealing-with-data.html"><a href="dealing-with-data.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a><ul>
@@ -350,14 +351,14 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <p>The above uses the aggregate function to create a new dataframe. The aggregate function takes a forumula just like the aov function. The formula says IKSI~Practice*Sequence. In English, this means take all of the observations of the dependent variable IKSI and group them by the independent variables Practice*Sequence. The data=AllData statement points R to the dataframe containing the results to aggregate. The final statement mean, tells R to use the mean function when aggregating the data. If the function was sd instead of mean, then R would use the standard deviation formula. The above line of code should produce a data frame in long format that looks similar to:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">IKSImeans</code></pre></div>
 <pre><code>##   Practice Sequence     IKSI
-## 1       b1     Long 385.0612
-## 2       b2     Long 369.5071
-## 3       b3     Long 369.5089
-## 4       b4     Long 374.7280
-## 5       b1    Short 299.4729
-## 6       b2    Short 229.8730
-## 7       b3    Short 171.7567
-## 8       b4    Short 175.5838</code></pre>
+## 1       b1     Long 411.6021
+## 2       b2     Long 393.8790
+## 3       b3     Long 397.7336
+## 4       b4     Long 388.9683
+## 5       b1    Short 307.9535
+## 6       b2    Short 228.6776
+## 7       b3    Short 180.7250
+## 8       b4    Short 174.2069</code></pre>
 <p>You should see what happens when you change the formula to IKSI~Practice, or IKSI~Sequence. The first should produce only the means across the levels of the Practice variable, and the second should produce only the means across the the levels of the Sequence variable. You could also try the formula IKSI~Subjects, and then you would see the mean IKSI for each subject collapsed across the Practice and Sequence length variables.</p>
 </div>
 <div id="graphing-the-data-using-ggplot2" class="section level2">
@@ -459,14 +460,14 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <p>IKSIall should now contain something like the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">IKSIall</code></pre></div>
 <pre><code>##   Practice Sequence     IKSI      stde
-## 1       b1     Long 385.0612  8.789838
-## 2       b2     Long 369.5071  8.847876
-## 3       b3     Long 369.5089 13.843057
-## 4       b4     Long 374.7280  9.414579
-## 5       b1    Short 299.4729 13.436550
-## 6       b2    Short 229.8730  8.785340
-## 7       b3    Short 171.7567 10.418050
-## 8       b4    Short 175.5838 10.513971</code></pre>
+## 1       b1     Long 411.6021  9.327388
+## 2       b2     Long 393.8790 11.126615
+## 3       b3     Long 397.7336 11.765540
+## 4       b4     Long 388.9683  9.403895
+## 5       b1    Short 307.9535 11.586728
+## 6       b2    Short 228.6776  7.966476
+## 7       b3    Short 180.7250 11.655763
+## 8       b4    Short 174.2069 11.455360</code></pre>
 <p>As mentioned earlier, ggplot2 uses the geom_errorbar() statement to draw error bars. The statement requires some information about the upper and lower limits of the error bars for each mean. The first step is to create a variable called limits, that holds the minimum and maximum y values for the error bars. The limits variable is created before calling the ggplot2 function. Following the limits statement we can run the ggplot scripts and include the geom_errorbar() statement. Notice that data=IKSIall has been changed because we are pointing to the new data frame with the mean IKSIs and the standard errors (stde) for each of the conditions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">limits &lt;-<span class="st"> </span><span class="kw">aes</span>(<span class="dt">ymax =</span> IKSI +<span class="st"> </span>stde, <span class="dt">ymin=</span>IKSI -<span class="st"> </span>stde)
 <span class="kw">ggplot</span>(<span class="dt">data=</span>IKSIall, <span class="kw">aes</span>(<span class="dt">x=</span>Practice, 
