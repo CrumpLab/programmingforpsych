@@ -350,14 +350,14 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <p>The above uses the aggregate function to create a new dataframe. The aggregate function takes a forumula just like the aov function. The formula says IKSI~Practice*Sequence. In English, this means take all of the observations of the dependent variable IKSI and group them by the independent variables Practice*Sequence. The data=AllData statement points R to the dataframe containing the results to aggregate. The final statement mean, tells R to use the mean function when aggregating the data. If the function was sd instead of mean, then R would use the standard deviation formula. The above line of code should produce a data frame in long format that looks similar to:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">IKSImeans</code></pre></div>
 <pre><code>##   Practice Sequence     IKSI
-## 1       b1     Long 421.0388
-## 2       b2     Long 398.0752
-## 3       b3     Long 378.7774
-## 4       b4     Long 367.2506
-## 5       b1    Short 320.4235
-## 6       b2    Short 242.9546
-## 7       b3    Short 191.6266
-## 8       b4    Short 197.4579</code></pre>
+## 1       b1     Long 406.4897
+## 2       b2     Long 402.4263
+## 3       b3     Long 380.0459
+## 4       b4     Long 376.1694
+## 5       b1    Short 304.0136
+## 6       b2    Short 252.8251
+## 7       b3    Short 199.9740
+## 8       b4    Short 180.5623</code></pre>
 <p>You should see what happens when you change the formula to IKSI~Practice, or IKSI~Sequence. The first should produce only the means across the levels of the Practice variable, and the second should produce only the means across the the levels of the Sequence variable. You could also try the formula IKSI~Subjects, and then you would see the mean IKSI for each subject collapsed across the Practice and Sequence length variables.</p>
 </div>
 <div id="graphing-the-data-using-ggplot2" class="section level2">
@@ -459,14 +459,14 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <p>IKSIall should now contain something like the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">IKSIall</code></pre></div>
 <pre><code>##   Practice Sequence     IKSI      stde
-## 1       b1     Long 421.0388 10.185322
-## 2       b2     Long 398.0752 12.627456
-## 3       b3     Long 378.7774 11.535712
-## 4       b4     Long 367.2506 11.654623
-## 5       b1    Short 320.4235 10.096361
-## 6       b2    Short 242.9546  7.487190
-## 7       b3    Short 191.6266  8.991711
-## 8       b4    Short 197.4579 13.718921</code></pre>
+## 1       b1     Long 406.4897 12.383041
+## 2       b2     Long 402.4263 13.119445
+## 3       b3     Long 380.0459 12.201516
+## 4       b4     Long 376.1694 11.295853
+## 5       b1    Short 304.0136 10.675688
+## 6       b2    Short 252.8251  8.083194
+## 7       b3    Short 199.9740  9.760098
+## 8       b4    Short 180.5623 10.246202</code></pre>
 <p>As mentioned earlier, ggplot2 uses the geom_errorbar() statement to draw error bars. The statement requires some information about the upper and lower limits of the error bars for each mean. The first step is to create a variable called limits, that holds the minimum and maximum y values for the error bars. The limits variable is created before calling the ggplot2 function. Following the limits statement we can run the ggplot scripts and include the geom_errorbar() statement. Notice that data=IKSIall has been changed because we are pointing to the new data frame with the mean IKSIs and the standard errors (stde) for each of the conditions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">limits &lt;-<span class="st"> </span><span class="kw">aes</span>(<span class="dt">ymax =</span> IKSI +<span class="st"> </span>stde, <span class="dt">ymin=</span>IKSI -<span class="st"> </span>stde)
 <span class="kw">ggplot</span>(<span class="dt">data=</span>IKSIall, <span class="kw">aes</span>(<span class="dt">x=</span>Practice, 
@@ -518,7 +518,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/CrumpLab/programmingforpsych/06-Visualizing.Rmd",
+"link": "https://github.com/CrumpLab/programmingforpsych/blob/master/06-Visualizing.Rmd",
 "text": "Edit"
 },
 "download": ["bookdown-demo.pdf"],

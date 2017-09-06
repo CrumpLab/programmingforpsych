@@ -6,7 +6,7 @@ bookdown::gitbook:
         <li><a href="./">Programming</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/CrumpLab/programmingforpsych/%s
+    edit: https://github.com/CrumpLab/programmingforpsych/blob/master/%s
     download: ["pdf"]
 bookdown::pdf_book:
   includes:

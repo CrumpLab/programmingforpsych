@@ -320,21 +320,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RandomNumbers &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">100</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">100</span>)</code></pre></div>
 <p>Typing the above line into the terminal will sample 100 numbers betwen 0 and 100 and place them into the variable named RandomNumbers. If you then type RandomNumbers into the terminal and press enter, you will see the contents (all of the 100 numbers) displayed in the R terminal. By changing the values in the function you can make your sample of numbers any size, and make the range any size.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RandomNumbers</code></pre></div>
-<pre><code>##   [1] 10.965924 89.440254 87.524997 98.611645  9.803705 95.349938 23.817055
-##   [8] 86.591726 95.254828 35.784767 22.635578 74.022004 50.993579 80.465336
-##  [15] 87.215131 37.866742 31.610127 48.235161  5.699107 83.057849 68.564311
-##  [22] 46.384729 78.307665 90.653741 89.897387 62.492839 18.971231 32.307981
-##  [29] 93.246549 54.755731 17.516985 70.103904  4.213942 50.379064  3.189612
-##  [36] 97.349785 58.574326 32.916461 76.212431 18.203432 24.113704 77.532640
-##  [43] 66.941334  9.417298 79.226023 29.666078 34.551588 52.923019 15.172625
-##  [50] 10.679160 53.456293 76.156716 27.390635 89.327899 61.335244 22.535543
-##  [57] 66.224920 24.592108 79.295230 44.161708 48.822363 33.094796 83.800126
-##  [64] 67.258648 49.418912 52.440692 38.362424 87.323019 34.855778 74.049733
-##  [71] 54.236898 99.090310 40.352722 94.922998 39.546328 24.857862  6.394080
-##  [78] 91.229563 62.945081 70.165791 89.479153 15.452187 27.619043 32.776774
-##  [85] 60.832022 78.471828 62.915286 98.841298 75.196233 55.508184 52.164045
-##  [92] 30.198590 90.192812 21.519846 91.695884 50.546668 64.755728 98.095296
-##  [99] 44.464558 63.124234</code></pre>
+<pre><code>##   [1] 84.5942679 26.0159920 64.9310855 54.0266292 58.4125280  1.7418198
+##   [7]  1.7163207 89.5924701 15.6070257 88.6386954 12.3979573 41.6620840
+##  [13] 51.5602004 85.8678906 14.1843219 40.2376724 75.8758919 88.6702846
+##  [19] 87.1048718 39.8103324 53.4809208 79.0743598 91.0481076 25.1312947
+##  [25] 44.1066659 96.2197836 74.5329635 31.8999765  6.0521609 30.9787783
+##  [31] 10.6672282 39.2485016 88.0810903 44.9987402 38.0584513 24.4648103
+##  [37] 15.7602388 26.9992344 77.4097610 45.8015609 31.7003644 64.8485324
+##  [43] 17.8512329 31.8952000 45.3380356 60.1090036 39.5494047 67.5696586
+##  [49] 58.2187336 27.0684915 47.0976946 19.2062418 90.1433619 37.0928295
+##  [55] 90.0050116 38.5095786 67.3534711 75.9552551 93.8378120  4.5941219
+##  [61] 67.6886528 10.2936005 69.9373973  8.9829996 99.5410860 16.5021796
+##  [67] 50.7962153 54.0617886 98.6922526 97.1015846 36.8654443 52.6784525
+##  [73] 70.8091733 13.9115333 43.4106106 73.0619647 49.5507064  0.6629015
+##  [79] 99.2776800 92.6593232 12.4827018 85.9653207 42.8307310 58.5286671
+##  [85] 39.4702353 30.4637325 29.3630823 53.7894430 67.0703130 19.9777118
+##  [91] 18.9308053 74.7354247 54.9909143 28.5677382 89.7716548 52.4432419
+##  [97] 98.4989001 71.4955600 25.9016081 66.5575539</code></pre>
 <p>It is also very easy to view these numbers graphically. For example, you might to see if your sample actually looks like a uniform distribution. One way to do this would be to create a histrogram that shows the frequency of each number according to different bin sizes (e.g., frequency of numbers between 0 and 10, 11 and 20, and so on). If the sample is a uniform distribution, then the bars of the histogram ought to be approximately the same height (e.g., flat and uniform). A histogram can be created using the function hist.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(RandomNumbers)</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-49"></span>
@@ -406,10 +408,10 @@ for (i in <span class="dv">1</span>:<span class="dv">10000</span>) {
 ##  [1]  0  1  2  3  4  5  6  7  8  9 10
 ## 
 ## $counts
-##  [1]  102  430 1146 2116 2488 2008 1182  435   84    9
+##  [1]  115  456 1232 2047 2509 2011 1085  425  106   14
 ## 
 ## $density
-##  [1] 0.0102 0.0430 0.1146 0.2116 0.2488 0.2008 0.1182 0.0435 0.0084 0.0009
+##  [1] 0.0115 0.0456 0.1232 0.2047 0.2509 0.2011 0.1085 0.0425 0.0106 0.0014
 ## 
 ## $mids
 ##  [1] 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5
@@ -442,20 +444,20 @@ testScores[testScores &lt;<span class="st"> </span><span class="dv">0</span>] &l
 <p>Now the variable testScores will only contain numbers between the range 0-100.</p>
 <p>One first question is to determine the mean of sample. Use the mean function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(testScores)</code></pre></div>
-<pre><code>## [1] 50.85939</code></pre>
+<pre><code>## [1] 50.73976</code></pre>
 <p>The next step is to perform a one-sample t-test to determine if the mean of the sample if statistically different from 50. A one-sample t-test can be computed using the t.test function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(testScores,<span class="dt">mu=</span><span class="dv">50</span>)</code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
 ## data:  testScores
-## t = 0.11487, df = 9, p-value = 0.9111
+## t = 0.13803, df = 9, p-value = 0.8933
 ## alternative hypothesis: true mean is not equal to 50
 ## 95 percent confidence interval:
-##  33.93506 67.78372
+##  38.61572 62.86380
 ## sample estimates:
 ## mean of x 
-##  50.85939</code></pre>
+##  50.73976</code></pre>
 <p>In the above, mu refers to the population mean. Most likely the t-test will return a non-significant p-value. This makes sense because the sample was taken from a distribution with a mean of 50, so the sample mean should not be different from 50. However, because the number of samples was small (only 10), it is possible by chance alone to find a significant result. Let’s create a different sample of test scores with a mean of 80, and run a one-sample t-test.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">testScores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">80</span>, <span class="dt">sd =</span> <span class="dv">20</span>)
 testScores[testScores &gt;<span class="st"> </span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="dv">100</span>
@@ -465,13 +467,13 @@ testScores[testScores &lt;<span class="st"> </span><span class="dv">0</span>] &l
 ##  One Sample t-test
 ## 
 ## data:  testScores
-## t = 5.3555, df = 9, p-value = 0.000459
+## t = 5.091, df = 9, p-value = 0.0006531
 ## alternative hypothesis: true mean is not equal to 50
 ## 95 percent confidence interval:
-##  65.65826 88.56022
+##  63.74012 85.71561
 ## sample estimates:
 ## mean of x 
-##  77.10924</code></pre>
+##  74.72787</code></pre>
 <p>In this case, the t-test will usually return a significant result, and this makes sense because the sample was drawn from a distribution with a mean of 80, not 50. However, even though we sampled from a distribution with mean 80, it is possible by chance alone that the t-test will return a non-significant result. The main factors that influence whether or not a one-sample test returns a significant result are: 1) the size of the difference between the sample and population mean, 2) the number of subjects or scores in the sample, 3) the variance of the sample. Larger differences, larger number of subjects, and smaller variances all lead to significant differences. Smaller differences, smaller number of subjects, and larger variance all lead to non-significant differences.</p>
 </div>
 <div id="simulating-an-independent-samples-t-test-two-groups-between-subjects" class="section level3">
@@ -490,26 +492,26 @@ Control[Control &lt;<span class="st"> </span><span class="dv">0</span>] &lt;-<sp
 ##  Welch Two Sample t-test
 ## 
 ## data:  Alcohol and Control
-## t = 4.7667, df = 37.181, p-value = 2.866e-05
+## t = 4.0003, df = 37.879, p-value = 0.0002832
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   69.16809 171.41933
+##   54.9102 167.4494
 ## sample estimates:
 ## mean of x mean of y 
-##  248.5838  128.2901</code></pre>
+##  256.7197  145.5399</code></pre>
 <p>Note the title of the t-test is called the Welch Two Sample t-test. This is the default t-test in R. If you were to run a t-test on the same scores in excel or SPSS, you find slightly different values. This is because the Welch test involves a statistical correction. It is possible to get the standard student’s t-test by setting the var.equal parameter as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(Alcohol,Control, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  Alcohol and Control
-## t = 4.7667, df = 38, p-value = 2.744e-05
+## t = 4.0003, df = 38, p-value = 0.0002821
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   69.20509 171.38233
+##   54.91613 167.44350
 ## sample estimates:
 ## mean of x mean of y 
-##  248.5838  128.2901</code></pre>
+##  256.7197  145.5399</code></pre>
 <p>As you can see the results of the different versions of the t-tests are small. But, it is still a good idea to know which t-test you are performing. For all future t-tests in this tutorial, we will use the standard version, and always remember to set var.equal = TRUE. The t.test function has several other parameters that can be set (e.g., running a one vs. two-tailed test). These options can be found by looking up t.test in R help.</p>
 </div>
 <div id="simulating-a-paired-samples-t-test-two-conditions-within-subjects" class="section level3">
@@ -523,22 +525,22 @@ day2&lt;-<span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="
 day2[day2&lt;<span class="dv">0</span>]&lt;-<span class="dv">0</span></code></pre></div>
 <p>Next, look at the means.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(day1)</code></pre></div>
-<pre><code>## [1] 20.06101</code></pre>
+<pre><code>## [1] 21.32846</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(day2)</code></pre></div>
-<pre><code>## [1] 29.97762</code></pre>
+<pre><code>## [1] 28.57944</code></pre>
 <p>Finally, compute the paired-samples t-test using the t.test function. This will be the same as before, except the option for a paired test will be set to TRUE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(day1, day2, <span class="dt">var.equal=</span><span class="ot">TRUE</span>, <span class="dt">paired=</span><span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  day1 and day2
-## t = -6.041, df = 19, p-value = 8.232e-06
+## t = -6.278, df = 19, p-value = 5.002e-06
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -13.352425  -6.480807
+##  -9.668400 -4.833552
 ## sample estimates:
 ## mean of the differences 
-##               -9.916616</code></pre>
+##               -7.250976</code></pre>
 </div>
 <div id="generality-of-the-t-test-examples" class="section level3">
 <h3><span class="header-section-number">5.3.4</span> Generality of the t-test examples</h3>
@@ -626,24 +628,24 @@ day3[day3 &lt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span cla
 <pre><code>## 
 ## Error: Subjects
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## Residuals 19  695.3    36.6               
+## Residuals 19    324   17.05               
 ## 
 ## Error: Subjects:Practice
 ##           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-## Practice   2   3855  1927.7   75.05 6.34e-14 ***
-## Residuals 38    976    25.7                     
+## Practice   2   3673  1836.7    90.3 3.65e-15 ***
+## Residuals 38    773    20.3                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">model.tables</span>(ANOVAresults,<span class="st">&quot;means&quot;</span>) </code></pre></div>
 <pre><code>## Tables of means
 ## Grand mean
 ##          
-## 30.81413 
+## 30.66267 
 ## 
 ##  Practice 
 ## Practice
 ##  day1  day2  day3 
-## 21.34 30.15 40.95</code></pre>
+## 21.25 30.34 40.40</code></pre>
 <p>Here is all the code for the simulation in one complete script:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">day1&lt;-<span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">5</span>)
 day2&lt;-<span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">5</span>)
@@ -1033,7 +1035,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/CrumpLab/programmingforpsych/05-C5.Rmd",
+"link": "https://github.com/CrumpLab/programmingforpsych/blob/master/05-C5.Rmd",
 "text": "Edit"
 },
 "download": ["bookdown-demo.pdf"],
