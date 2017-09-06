@@ -350,14 +350,14 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <p>The above uses the aggregate function to create a new dataframe. The aggregate function takes a forumula just like the aov function. The formula says IKSI~Practice*Sequence. In English, this means take all of the observations of the dependent variable IKSI and group them by the independent variables Practice*Sequence. The data=AllData statement points R to the dataframe containing the results to aggregate. The final statement mean, tells R to use the mean function when aggregating the data. If the function was sd instead of mean, then R would use the standard deviation formula. The above line of code should produce a data frame in long format that looks similar to:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">IKSImeans</code></pre></div>
 <pre><code>##   Practice Sequence     IKSI
-## 1       b1     Long 406.4897
-## 2       b2     Long 402.4263
-## 3       b3     Long 380.0459
-## 4       b4     Long 376.1694
-## 5       b1    Short 304.0136
-## 6       b2    Short 252.8251
-## 7       b3    Short 199.9740
-## 8       b4    Short 180.5623</code></pre>
+## 1       b1     Long 397.3375
+## 2       b2     Long 381.9874
+## 3       b3     Long 392.3123
+## 4       b4     Long 371.6213
+## 5       b1    Short 302.3488
+## 6       b2    Short 254.2798
+## 7       b3    Short 196.0524
+## 8       b4    Short 186.6155</code></pre>
 <p>You should see what happens when you change the formula to IKSI~Practice, or IKSI~Sequence. The first should produce only the means across the levels of the Practice variable, and the second should produce only the means across the the levels of the Sequence variable. You could also try the formula IKSI~Subjects, and then you would see the mean IKSI for each subject collapsed across the Practice and Sequence length variables.</p>
 </div>
 <div id="graphing-the-data-using-ggplot2" class="section level2">
@@ -368,14 +368,14 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
       <span class="dt">y=</span>IKSI,<span class="dt">group=</span>Sequence, <span class="dt">color=</span>Sequence))+
 <span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>)+<span class="st"> </span>
 <span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">3</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-135-1.png" width="480" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-135-1.png" width="480" /></p>
 <p>This is nice looking graph, and shows an example of the standard look and feel of a figure made with ggplot2. The fancy grey background is not standard for figures in Psychological research, and the background can be set to white using an additional statement. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>IKSImeans, <span class="kw">aes</span>(<span class="dt">x=</span>Practice, <span class="dt">y=</span>IKSI,
       <span class="dt">group=</span>Sequence, <span class="dt">color=</span>Sequence))+
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">3</span>) +
 <span class="st">  </span><span class="kw">theme_classic</span>(<span class="dt">base_size=</span><span class="dv">15</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-136-1.png" width="480" /> ggplot2 is a very powerful package for visualizing data. The commands for using ggplot2 can appear complex and mysterious. New users of ggplot2 can expect to use trial and error when attempting to change the look and feel of graphs. The next few examples provide a closer look at the syntax for creating graphs in ggplot2, and provide example code for many common options that you might wish to change in your graphs.</p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-136-1.png" width="480" /> ggplot2 is a very powerful package for visualizing data. The commands for using ggplot2 can appear complex and mysterious. New users of ggplot2 can expect to use trial and error when attempting to change the look and feel of graphs. The next few examples provide a closer look at the syntax for creating graphs in ggplot2, and provide example code for many common options that you might wish to change in your graphs.</p>
 <div id="the-ggplot2-layer-metaphor-for-graphing-data" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> The ggplot2 layer metaphor for graphing data</h3>
 <p>ggplot2 uses layers to build graphs. Imagine starting with a blank canvas as the first layer. The second layer could be to draw and x and y axis. The third layer could be to add lines to the graph. The fourth layer could be to add points to the lines. ggplot2 uses a similar kind of layer system to build graphs by adding new visual elements on top of existing elements. The layering is reflected in the code itself. Let’s look at the code from the previous graph again:</p>
@@ -429,7 +429,7 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>,<span class="kw">aes</span>(<span class="dt">linetype=</span>Sequence))+
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>,<span class="kw">aes</span>(<span class="dt">shape=</span>Sequence)) +
 <span class="st">    </span><span class="kw">theme_classic</span>(<span class="dt">base_size=</span><span class="dv">15</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-147-1.png" width="480" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-147-1.png" width="480" /></p>
 <p>Let’s add a title, change the x and y-axis labels, and change the scale of the y-axis.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>IKSImeans, <span class="kw">aes</span>(<span class="dt">x=</span>Practice, 
       <span class="dt">y=</span>IKSI, <span class="dt">group=</span>Sequence))+
@@ -440,7 +440,7 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <span class="kw">ggtitle</span>(<span class="st">&quot;Mean IKSIs for E1&quot;</span>) +
 <span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">500</span>)) +
 <span class="st">    </span><span class="kw">theme_classic</span>(<span class="dt">base_size=</span><span class="dv">15</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-148-1.png" width="480" /> Now we have an almost journal-ready figure. Often times it is a good idea to add error bars to the figure. In this example, the error-bars will not be informative about patterns of significance because the design is within-subjects. However, it still common to add error bars. The next page covers adding error bars using ggplot2.</p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-148-1.png" width="480" /> Now we have an almost journal-ready figure. Often times it is a good idea to add error bars to the figure. In this example, the error-bars will not be informative about patterns of significance because the design is within-subjects. However, it still common to add error bars. The next page covers adding error bars using ggplot2.</p>
 </div>
 </div>
 <div id="adding-error-bars-to-figures-in-ggplot2" class="section level2">
@@ -459,14 +459,14 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <p>IKSIall should now contain something like the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">IKSIall</code></pre></div>
 <pre><code>##   Practice Sequence     IKSI      stde
-## 1       b1     Long 406.4897 12.383041
-## 2       b2     Long 402.4263 13.119445
-## 3       b3     Long 380.0459 12.201516
-## 4       b4     Long 376.1694 11.295853
-## 5       b1    Short 304.0136 10.675688
-## 6       b2    Short 252.8251  8.083194
-## 7       b3    Short 199.9740  9.760098
-## 8       b4    Short 180.5623 10.246202</code></pre>
+## 1       b1     Long 397.3375 12.052041
+## 2       b2     Long 381.9874 11.024680
+## 3       b3     Long 392.3123 10.159185
+## 4       b4     Long 371.6213  8.861524
+## 5       b1    Short 302.3488 12.691113
+## 6       b2    Short 254.2798 10.268137
+## 7       b3    Short 196.0524 11.861801
+## 8       b4    Short 186.6155 10.330631</code></pre>
 <p>As mentioned earlier, ggplot2 uses the geom_errorbar() statement to draw error bars. The statement requires some information about the upper and lower limits of the error bars for each mean. The first step is to create a variable called limits, that holds the minimum and maximum y values for the error bars. The limits variable is created before calling the ggplot2 function. Following the limits statement we can run the ggplot scripts and include the geom_errorbar() statement. Notice that data=IKSIall has been changed because we are pointing to the new data frame with the mean IKSIs and the standard errors (stde) for each of the conditions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">limits &lt;-<span class="st"> </span><span class="kw">aes</span>(<span class="dt">ymax =</span> IKSI +<span class="st"> </span>stde, <span class="dt">ymin=</span>IKSI -<span class="st"> </span>stde)
 <span class="kw">ggplot</span>(<span class="dt">data=</span>IKSIall, <span class="kw">aes</span>(<span class="dt">x=</span>Practice, 
@@ -479,7 +479,7 @@ AllData&lt;-<span class="kw">data.frame</span>(Subjects,IKSI,Practice,Sequence)<
 <span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">100</span>,<span class="dv">500</span>)) +
 <span class="kw">geom_errorbar</span>(limits, <span class="dt">width=</span>.<span class="dv">2</span>) +
 <span class="st">    </span><span class="kw">theme_classic</span>(<span class="dt">base_size=</span><span class="dv">15</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-154-1.png" width="480" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-154-1.png" width="480" /></p>
 
 </div>
 </div>
@@ -521,7 +521,7 @@ gitbook.start({
 "link": "https://github.com/CrumpLab/programmingforpsych/blob/master/06-Visualizing.Rmd",
 "text": "Edit"
 },
-"download": ["bookdown-demo.pdf"],
+"download": ["Programming_Crump.pdf"],
 "toc": {
 "collapse": "subsection"
 }
