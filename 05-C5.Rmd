@@ -596,7 +596,7 @@ The results from t-tests can be prettified using broom
 
 ```{r}
 library(broom)
-tidy(t.test(DV~IV1,AllData[AllData$IV1!="Group1",], paired=TRUE))
+kable(tidy(t.test(DV~IV1,AllData[AllData$IV1!="Group1",], paired=TRUE)))
 ```
 
 
