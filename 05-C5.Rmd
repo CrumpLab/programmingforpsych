@@ -580,6 +580,26 @@ t.test(AllData[AllData$IV1=="Group2",]$DV,AllData[AllData$IV1=="Group3",]$DV,var
 
 Again, we see that the difference is not significant (p=.284). So Group 2 is not significantly different from Group 3.
 
+### Prettier results using kable and broom
+
+The results of anovas or t-tests aren't appealing look to at when they are printed to the console, and often look cluttered when printed to a .pdf or .html file using Rmarkdown. The kable function from the package knitr, and the xtable function from the xtable package can help with improving the look and feel of ANOVA and other tables. 
+
+
+```{r ,}
+library(knitr)
+library(xtable)
+aov.out <- summary(aov(DV~IV1,AllData))
+kable(xtable(aov.out),format='markdown')
+```
+
+The results from t-tests can be prettified using broom
+
+```{r}
+library(broom)
+tidy(t.test(DV~IV1,AllData[AllData$IV1!="Group1",], paired=TRUE))
+```
+
+
       
 ### Writing up the results
 

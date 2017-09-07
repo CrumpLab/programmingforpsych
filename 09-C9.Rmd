@@ -742,3 +742,341 @@ Press the next trials to start a trial, press a key on the keyboard to make a re
 At this point the major obstacles to programming an experiment have been solved. The design of 96 Stroop trials has been captured and stored in an array. That array is used to determine the words and colors that get printed to the screen on each trial. The example shows how to program a simple paragraph element in HTML to display text, and shows how to use JQUERY to update and the change the contents of the paragraph. Finally, the Javascript code for recording time stamps is covered.
 
 All that is left is organizational and making things look pretty. One issue is to create a final data structure that can be exported after the experiment is completed. This tutorial only briefly covers this final operation as different researchers will want to code their data structures in different ways for different purposes. The important thing is that you code a data structure that preserves all of the important information, saves it in a file, and can be meaningfully interpreted during analysis at a later date.
+
+### Next steps: WebStroopTutorial
+
+This section on programming a simple Stroop experiment comes with several example tutorial files. ALl of these files are contained in the [WebStroopTutorial](https://github.com/CrumpLab/WebStroopTutorial) repo. These files incrememental build a Stroop experiment. A brief of list of the files and notes is below:
+
+
+#### StroopDemo2.html
+
+File Dependencies: jquery-1.7.1.js, StrooptrialGenerator.js, Stroop.css
+
+New Changes:
+
+*  Makes the font bigger
+* Centers Stroop stimulus horizontally 
+* Stroop stimulus disappears after response
+* Response automatically triggers next trial with a delay of 500 ms
+
+#### StroopDemo3.html
+
+File Dependencies: jquery-1.7.1.js, StrooptrialGenerator.js, Stroop.css
+	
+New Changes:
+
+* Uses CSS style sheets
+* Place Stimulus in the center of the window (both horizontally and vertically)
+* Make the background Black
+* Set many paragraph properties with CSS
+
+#### StroopDemo4.html
+
+File Dependencies: jquery-1.7.1.js, StrooptrialGenerator.js, Stroop.css
+
+New Changes:
+	
+* Include a fixation warning before stimulus onset
+* Give feedback after each trial
+
+#### StroopDemo5.html
+
+File Dependencies: jquery-1.7.1.js, StrooptrialGenerator.js, Stroop.css
+
+New Changes:
+
+* Disable use of Backspace and space keys (general example of disabling default web Browser behavior triggered by pressing keys.)
+* Web-browsers have some default behaviors that may interrupt your experiment. For example, pressing the backspace key can cause the browser to return to the previous page. Or press space can cause the browser to page-down. It may be important to override these defaults.
+
+#### StroopDemo6.html
+
+File Dependencies: jquery-1.7.1.js, StrooptrialGenerator.js, Stroop.css, StroopDemo6b.html, TURKconsent.htm
+
+New Changes:
+
+* This demo begins covering options you may want for running on AmazonTurk
+`StroopDemo6.html` is now an opening page that displays a consent form, and an accept button. 
+* The opening window also has a form that can later be used to submit data to Amazon. One of the form inputs (called RTs) would normally be hidden, but is shown in the demo at the bottom of the screen. This form will be populated with the datafile, a string of datavalues after the experiment is complete.
+* The pop-up window that runs the main experiment goes full-screen.
+* A challenge with using a pop-window is to have the data collected from this window be sent back to the parent window. There is a new submit data button in the pop-up window that gives example code for sending data from the child pop-up back to the parent pop-up.
+* This also shows how to present an html document as a frame inside a document. This is used to present the consent form on the opening page.
+
+#### StroopDemo7.html
+
+File Dependencies: jquery-1.7.1.js, StrooptrialGenerator.js, Stroop.css, StroopDemo6b.html, TURKconsent.htm
+
+New Changes:
+
+* Added a demographics questionnaire to beginning of experiment window on popup.
+* Shows examples of extracting data from HTML elements and forms using JQUERY
+* Demographics is saved as part of the data, which is returned to the main window form element input RTs.
+* Buttons like submit data, and the RTs form in the parent window are shown to give examples of functionality, these can easily be hidden.
+	
+
+## Amazon Turk
+
+There are several steps involved in running your experiment on Amazon Turk. This is a short guide to get up and running. *Fair Warning*, this tutorial was created in 2014, so some aspects may have changed. For example, Dropbox no longer let's you serve webpages from a public folder (use [github pages](https://pages.github.com), or [firebase](https://firebase.google.com)).
+
+<div class="marginnote">
+
+Check out:
+
+- [PsiTurk](https://psiturk.org)
+- [JSPsych](http://www.jspsych.org)
+
+</div>
+
+Todd Gureckis and I delivered workshops on web-experiments and Amazon Turk at APS in 2015 and 2016. [We created a website with our slide deck, and links to helpful resources.](http://apsturk.github.io).
+
+### Create an Account
+
+Go to the Amazon Turk website and create an account. To do this you will need an Amazon account. You can use your Amazon account to log-in to all of the Amazon Turk services. There is a  verification process, as being a work requester requires that you link an American credit card or debit card to the account so that you can put money in to pay the workers.
+
+### Worker site, Requester site, & the Sandbox	
+
+Amazon Turk has different websites depending on how you want to log in. As an experimenter you will need to become a work requester. You can also become a worker. On the worker site you will see the hits (jobs) that are currently posted. On the requester site you will have the ability to post and manage your jobs. It is good to have access both as a worker and requester so that as a requester you can check to see that the workers are seeing what you want them to see. 
+	Most of the important de-bugging and testing can be accomplished in the Amazon Turk Sandbox. This is basically a mirror-copy of the main worker and requester sites, except they operate in test-run (sandbox) mode. Once you have your experiment programmed and ready to roll, you can first load it up as a requester in sandbox mode, then you can log in as worker in sandbox mode and test out your experiment.
+	In sandbox mode you can 1) verify that your experiment runs at it should, and 2) MOST IMPORTANTLY, that your script interfaces properly with Amazon so that two things happen, A) the worker can accept, complete, and submit the hit to get paid, and B) your data gets sent to Amazon so that you can later retrieve it. Both of these functions can be tested in sandbox mode prior to loading the hits on the main page. 
+
+### Basic overview of interfacing with Amazon Turk
+	
+The rest of this tutorial assumes that you have a Mac. The basic process will be the same on a Windows machine with slight modifications that are not covered here. First, you need to create a web-based experiment, then you need to be able to host this experiment on a server so that people on the web can access the experiment. If you host on your own server then many more options become available to you. For example, you can have your website send data back to your server as participants complete the experiment. 
+
+This tutorial covers a different option. If you have a dropbox account, then you can host your experiment directly from your public folder. Any file in your public folder can generate an external link allowing anyone with the link to access the file. This allows your experiment to be served to the web. However, this method does not allow client-side information to be passed back to the Dropbox server. All of the data handling will be dealt with client-side, on the workers computer. To accomplish this, your experiment needs to put the data that it generates into HTML form element (which will be a hidden text box). At the end of the experiment the contents of this form element (your data), will be submitted to the Amazon system along with other worker information (such as worker ID, time started, time completed, and other information that automatically gets passed). You will retrieve the data from Amazon’s servers.
+
+The process of loading a hit onto Amazon Turk can be accomplished directly from the Turk requester website. This website gives the tools to construct and load simple HITs, things like questionnaires. If you are running a multi-trial experiment using your own website you will not be able to use Amazon’s built in tools. 
+Luckily, Amazon provides a rich set of command line tools that allow you to use shell scripts in UNIX to load and manage your HITS, this includes paying workers and downloading your data. The shell scripts can be run directly from the terminal on a mac. If you are on windows there are similar options that are not covered here.
+
+### Download the Command Line Tools
+
+The first step is downloading the command line tools provided by Amazon. You access these by clicking on the developer tab on your requester page. You will see a link to download the CLT or command line tools. Click this link, then find the option for UNIX downloads. Download the file. You will get an archive that looks like aws-clt-1-1.3.0.tar. Extract the archive. Now you have access to a folder with all of the command line tools. In the main folder there is a UserGuide.html and other pages that walk through all of the examples. 
+	
+### External Hit sample application
+
+In the user guide you will want to read up on the External hit sample application, these are tools used to interface your web-experiment with Amazon. 
+
+You can find all of the scripts associated with this sample application by looking in the samples folder in the command line tools that you downloaded. You should see a sample called external_hit. This folder contains several files. With the exception of externalpage.htm, all of these files are unix shell scripts. They are all currently configured to run an example of loading a hit onto Amazon. 
+
+A good first step is figuring out how to load this hit into your requester sandbox. If you can get this hit working, then you are one step closer to getting your own hit working. Eventually, we will copy some of the code from the externalpage.htm example into your own experiment code, using the same methods as in the example to interact with amazon.
+
+### Running the example
+
+1.	Amazon will provide you with two access codes. An access_key, and a secret_key. Find these two codes, you will need them to run the example.
+2.	In the CLT folder, you will see another folder called bin. Inside this folder is a .txt file called mturk.properties. You will need to edit this file. You can do use in any text editor. A good free one is TextWrangler. You will see access_key=[insert your access key here] and the same for secret_key. You need to insert both codes into the file. Notice the example in comments above in the file. The codes here do not [ ] square brackets around them. Follow this example. Do not enter the code in between the square brackets. Enter the code without square brackets.
+3. In the same file you will see an Advanced properties section. This is where you set whether or not you load your HIT into the sandbox for testing, or the main website. You want to load the example into the sandbox. The comment symbol, #, controls the behavior. You should see the following:
+
+
+
+
+		# -------------------
+		# ADVANCED PROPERTIES
+		# -------------------
+		#
+		# If you want to test your solution in the Amazon Mechanical Turk Developers Sandbox (http://sandbox.mturk.com)
+		# use the service_url defined below:
+		#service_url=http://mechanicalturk.sandbox.amazonaws.com/?Service=AWSMechanicalTurkRequester
+		
+		# If you want to have your solution work against the Amazon Mechnical Turk Production site (http://www.mturk.com)
+		# use the service_url defined below:
+		service_url=http://mechanicalturk.amazonaws.com/?Service=AWSMechanicalTurkRequester
+		
+		# The settings below should only be modified under special circumstances.
+		# You should not need to adjust these values.
+		retriable_errors=Server.ServiceUnavailable,503
+		retry_attempts=6
+		retry_delay_millis=500
+
+To use the sandbox, remove the # from the line:
+		#service_url=http://mechanicalturk.sandbox.amazonaws.com/?Service=AWSMechanicalTurkRequester
+
+And add a comment to the following line:
+
+
+	service_url=http://mechanicalturk.amazonaws.com/?Service=AWSMechanicalTurkRequester
+
+Your script should read:
+
+		
+		# ADVANCED PROPERTIES
+		# -------------------
+		#
+		# If you want to test your solution in the Amazon Mechanical Turk Developers Sandbox (http://sandbox.mturk.com)
+		# use the service_url defined below:
+		service_url=https://mechanicalturk.sandbox.amazonaws.com/?Service=AWSMechanicalTurkRequester
+		
+		# If you want to have your solution work against the Amazon Mechnical Turk Production site (http://www.mturk.com)
+		# use the service_url defined below:
+		#service_url=https://mechanicalturk.amazonaws.com/?Service=AWSMechanicalTurkRequester
+		
+		# The settings below should only be modified under special circumstances.
+		# You should not need to adjust these values.
+		retriable_errors=Server.ServiceUnavailable,503
+		retry_attempts=6
+		retry_delay_millis=500
+
+IMPORTANT NOTE:
+I have run into an error using this file exactly as written above. The error has to do with the http:// statement. To run without errors, the http:// needs to be changed to https://. Notice, in the above code the http:// has been changed to https://
+
+### Running the example in the terminal
+
+The scripts provided by Amazon in the external_hit folder are run in the terminal on a mac. There are several scripts in the folder and each accomplishes different jobs. The scripts are currently configured to run the external_hit example. To do this you will use the run.sh script.
+
+1. Open the terminal
+2. navigate to the directory that contains the external_hit folder, go into the external_hit folder
+3. run the `run.sh` script, type:
+
+
+		./run.sh
+
+Press enter. If everything has worked, your terminal will contact Amazon and load up the external_hit example onto your sandbox. The terminal ought to return a direct link to this HIT in the sandbox. You can copy and paste it into your browser to view the hit online. 
+
+Using the sandbox as a worker you should find and complete the hit. You will see the amazon interface that the workers see, and this will show you how the worker finds, sees, and interacts with your HIT. 
+
+When you click on the HIT to view it, you will see an accept hit button. You can complete the hit, and then submit it to amazon. 
+
+### Getting results
+
+After you have completed the hit, you can use the terminal again to download the data. Using the same steps as above you should run the `getResults.sh` script in the terminal. This will download the results into a file called `external_hit.results`, which is contained in the external_hit example folder. 
+
+### Approving and deleting
+
+If this was a real hit, then you would need to approve the job to pay the worker, and delete the hit from amazon. You can do this in the terminal by running approveAndDeleteResults.sh. This command also works in the sandbox, and will pay you fake money for your hit as well as delete the hit from Amazon. If you do not make a habit of managing your HITs on Amazon then it will become very cluttered and you may accidentally fail to pay workers. 
+
+### General points about the example
+
+If you ran the example, you will see that you can complete the hit from within the amazon interface. The amazon interface loads the external page as an inline frame. If you directed Amazon to your own webpage instead the example, then your webpage would be loaded in the frame. As a quick side note, the external_hit.question file is where you tell amazon which webpage to load. If you look at this file you will see that amazon is hosting the webpage (a copy of which is in your external_hit folder). For example, the file reads:
+
+
+	<ExternalQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd">
+	    <ExternalURL>http://s3.amazonaws.com/mturk/samples/sitecategory/externalpage.htm?url=${helper.urlencode($urls)}</ExternalURL>
+	    <FrameHeight>450</FrameHeight>
+	</ExternalQuestion>
+
+You would replace the external URL reference with your own website, as in:
+
+	<ExternalQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd">
+	    <ExternalURL>http://www.yourwebsite.com</ExternalURL>
+	    <FrameHeight>450</FrameHeight>
+	</ExternalQuestion>
+
+You can look at a copy of the externalpage.htm file that amazon is hosting on it’s own server, it is in your external_hit sample folder. This file contains javascript code, and html forms that show how to interact with Amazon. This is very important code.
+
+1.	The code determines whether the worker has accepted the HIT
+2.	Once the HIT has been accepted, the code submits data back to amazon, and tells amazon that worker completed the hit.
+
+The important features of the code are:
+
+1.	the `gup` function
+
+This appears at the top of the `externalpage.htm` file. The function is written in javascript. In your own code you will have a section in the header where you have your own javascript, and this is where the gup function should be placed. This function allows the website to information to determine whether the HIT has been assigned to a worker.
+
+2.	the `mturk_form`
+
+In the body of the HTML you will see an HTML form, the id is `mturk_form`. This form allows users to input information, and then submit that information back to amazon. In the example you will see a question, what type of webpage is shown below? Then some radio buttons, then a submit button. 
+
+Also notice, if you are viewing the page in the sandbox and haven’t yet clicked accept hit, then the submit button that is part of the form will display the message “You must accept hit...”. If you accept the hit, then this message goes away, and you can submit the hit. The javascript controlling this behavior is at the bottom of the html file.
+
+
+### Data handling
+
+The data from the hit is sent back to Amazon through the mturk_form. Any input that is in the form will get sent back. If you add form elements, or take away form elements, then you will add or take away from the data that you will see in your results file.
+
+When you run the getResults.sh script you will return the external_hit.results file. The data need to be post-processed. The first line in the data field contains headers for each of the data values. These are like column names in a spreadsheet. The main exception is that each name is enclosed in “ “ quotes. So, you will see something like this:
+
+	“hitid” “hittypeid” “title” “description” etc...
+
+Each line that follows is the data from a single hit. Each of the data values are also enclosed in quotes and separated by tabs. You could copy and paste the whole thing into excel if you wanted to, and it would fit neatly into the rows and columns. 
+
+Each line is very long containing information from multiple variables. The data that you want returned from the hit will be near the very end, or the last quoted item in the line. Any element in the mturk_form that is submitted will be included in the data line as its own quoted item. 
+
+There are probably many options for sending and receiving data through Amazon. The direction that I chose was to have my web experiment compile all of the data from the experiment into a single line, and then put this single line of data into the mturk_form as a form element. This way the built-in form sends the data back using the code that Amazon provides. This long line of data will be in string format, that is just a long list of characters. Data in this format will need parsing later for final analysis. 
+
+The strategy that I adopt is to have my data be separated by different item-delimiters that can be uniquely identified later to parse the line. For example, I store all of the data during the experiment in a javascript array. Each element in the array can be outputted as a comma separated list using the `.join` method (e.g., `yourarray.join()` returns a comma separated list in string format). Trial 1 might look like:
+
+	red,green,congruent,13241986,12341697,r
+
+The next step is to aggregate across lines of data into a single line. For this I choose another unique item-delimiter, like `:`
+
+So, two lines of data can be concatenated onto one line like this:
+
+	red,green,congruent,13241986,12341697,r: red,green,congruent,13241986,12341697,r:
+
+The `:` becomes an end of line character that is used in post-processing to individuate lines. 
+
+You will need to make your own decisions about how to format and process your data. This tutorial does not cover data-analysis or processing of data, the main purpose is to show how data can be passed and retrieved from amazon.
+
+
+### Loading the Stroop example experiment onto Amazon Turk
+
+`StroopDemo8.html` is a more complete example providing code to run a Stroop experiment like the ones in the previous demos. This script extends the previous examples in several ways. 
+
+1.	The demo can be loaded on Amazon Turk as HIT. It would be best to do this in sandbox mode.
+2.	The demo allows workers to preview the hit before accepting. In preview mode a message is displayed saying that in order to complete the hit, the worker must first press accept hit before continuing. Having a preview mode is helpful for workers to decide if they want to participate in your experiment.
+3.	The demo includes a browser detection script. If the browser is internet explorer, then a message is returned saying that the HIT cannot be completed. Links are provided to download safari, google chrome, or firefox.
+4.	The demo has functionality that interacts with amazon in important ways. When the worker accepts the hit, and completes the task, the pop-window automatically closes, and the information in the main window changes. After completion the main window shows a submit button, and a web form for workers to leave comments if they choose to. When the submit button is pressed the data from the experiment and any text in the form is passed back to amazon.
+
+### Steps to run the demo on Amazon Turk
+
+1.	Create a free dropbox account so that you can serve the experiment to the web. With the dropbox folder, anything placed inside your dropbox public folder can generate a link. Create a new folder inside your dropbox public folder. This folder will house the files needed to run the experiment. Copy the following files from the tutorial folder into the folder that you create:
+
+	* `StroopDemo8.html` This is the HTML for the opening page
+	* `StroopDemo8b.html`		This is the main experiment, opens as a pop-up
+	* `StrooptrialGenerator.js`		Javascript functions for the experiment
+	* `Jquery-1.7.1.js`			JQUERY library
+	* `Stroop.css`			Style sheet for experiment
+	* `TURKconsent.htm`		Example consent form
+	* `StroopInstruct.htm`		Stroop Instructions
+
+You can test the experiment at this point. If you open up `StroopDemo8.html` in a web-browser everything should run smoothly. However, at the end of the experiment you will not be able to submit or retrieve the data, as this part only works when the experiment is loaded and run on Amazon Turk.
+
+2.	The tutorial folder contains a folder called DemoStroop. This is basically a copy of the external_hit folder folder provided by Amazon and reviewed in the previous section. The contents of the DemoStroop folder are:
+
+* `approveAndDeleteResults.sh`		Run after all hits complete, approves and deletes hits
+* `external_hit.input`			Carry-over from external_hit, not used but left in place
+* `external_hit.properties`			Edit to change properties of your experiment
+* `external_hit.question`			Edit to change web-address for experiment
+* `external_hit.results`			Will contain results after they have been downloaded
+* `external_hit.success`			A log file
+* `externalpage.htm`		Carry-over from external_hit, not used
+* `getResults.sh`				Script to retrieve data from Amazon
+* `reviewResults.sh`			Allows you to review results
+* `run.sh`					Load a HIT onto Amazon
+
+
+Make a copy of this folder and/or place it into your `aws-mturk-clt-1.3.0/samples/` directory. I made this folder by simply copying the external_hit folder, giving the folder a new name, and then editing the contents of the text files that are contained within. In the DemoStroop folder most of the files have already been edited, but a few more edits will be required.
+
+#### Edits to file path
+
+If you were to make a copy of the external_hit folder, then the main edits that you will need to make are to the file paths in each of the scripts. In each of the scripts, whenever you see the filepath `/samples/external_hit`, you will need to change external_hit to the new filepath, in this case `DemoStroop`. All of the scripts in the `DemoStroop` folder have already included this change.
+
+#### Edits to web-address
+
+The file `external_hit.question` needs to be edited so that you can refer Amazon to the web address for the experiment. The web address that is currently there links to a file on my dropbox folder. You will want to change this to link to the `StroopDemo8.html` file in your dropbox folder (note: control-clicking or right-clicking on `StroopDemo8.html` in the finder will give a dropbox option to copy public link, this is the link to place in `external_hit.question`).
+
+#### Edits to properties
+
+The `external_hit.properties` file allows you to change the title, description, keywords, reward (payment), and other properties of your HIT. 
+
+#### NUMBER OF ASSIGNMENTS vs.  NUMBER OF HITS (BIG DIFFERENCE)
+
+The `external_hit.properties` file allows you to change the number of assignments per hit. Most likely this is option that you want. Using this option Amazon generates 1 HIT, and ensures that any individual worker completes the hit just once. If you want many unqiue workers to complete the HIT, then set the number of assignments to a larger value. 
+
+You can change the number of HITS in the run.sh script. You will see –maxhits 1 at the end of the third last line. If you increase this number then Amazon will load the corresponding number of HITS, however this will give the same worker the option to complete the hit as many times as it is listed.
+
+If you want unique subjects, then change the number of assignments and keep maxhits to 1.
+
+### Ready to Load!
+
+All the files should be in place. To load the experiment onto amazon use the same steps as in the external_hit example
+
+1.	open up a terminal
+2.	change the directory to DemoStroop
+3.	Make sure your `mturk.properties` file has the sandbox line uncommented, and the main website commented out.
+4.	Type `./run.sh` into the terminal and press enter
+5.	If the hit loads you will get a link to it, copy and past into a browser and accept and complete the hit
+6.	Note: the experiment is set to last 10 trials.
+7.	Submit the hit back to Amazon
+8.	To download the data type `./getResults.sh` into the terminal and press enter
+9.	View the data that is now in `external_hit.results` in your DemoStroop folder
+10.	 To approve and delete the hit type: `./approveAndDeleteResults.sh` and enter into the terminal
+
