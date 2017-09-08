@@ -18,6 +18,6 @@ The textbook can be viewed as a webook here at [https://crumplab.github.io/progr
 
 2. The source code for this textbook is available in this repo. 
  
- a. Edit the .Rmd files, and push them back
+ a. Edit the .Rmd files, and then ubmit pull requests
   
  b. When you are reading the textbook, the edit link in the top bar of the textbook should automatically take you to the source .Rmd file
