@@ -503,7 +503,178 @@ summary(ANOVAresults)
 model.tables(ANOVAresults,"means")
 ```
 
+## Power analysis and sample-size planning by Monte Carlo simulation
 
+The above code blocks show examples of simulating data in a few different designs, and then analyzing the simulated data with an ANOVA. By repeating this process many times for any given design, we can estimate statistical properties of the design that should hold over the long run. For example, how often does the design produce a 'significant' (p<.05) effect? This can be estimated by running 1000s of independent simulations, computing and saving the p-value from each simulation, and then determining the proportion of p-values less than .05 from the distribution of simulated p-values. In principle, long-run expectations for any other statistic of a simulated design could be estimated in this way as well. In addition, design simulations can be constructed down to the level of individual trial data for individual subjects, which can aid in sample-size and cell-size planning. Some example monte-carlo simulations are presented below.
+
+### Monte-Carlo one-sample T-test Simulation
+
+The following simulates 25 sample means from a normal distribution (mu=100, sd=10), and then conducts a one-sample t-test against the population mean of 100. This is equivalent to simulating the null. The simulation is repeated 1000 times, each time the observed p-value is saved.
+
+```{r}
+sims_to_run<-1000
+save_p <- vector(length=sims_to_run)
+
+for(i in 1:sims_to_run){
+sim_data <- rnorm(25,100,10)
+t.out <-t.test(sim_data,mu=100)
+save_p[i] <- t.out$p.value
+}
+
+hist(save_p)
+proportion_sig<-length(save_p[save_p<.05])/sims_to_run
+proportion_sig
+
+```
+
+As expected, the histogram of simulated p-values is roughly uniform, indicating that all possible p-values are equally likely. In other words, chance would be expected to produce p<.05 about 5% of the time. The calculated proportion of significant values was `r proportion_sig`. In general, as the number of simulated runs increases toward infinity, the estimated parameter should settle on it's true expected value.
+
+### Monte-Carlo paired T-test Simulation
+
+25 subjects, with expected mean 100 in Condition 1 and mean 110 in Condition 2, with standard deviation 30. This simulation includes a programmed difference of 10, so there is a true effect. 
+
+```{r}
+sims_to_run<-1000
+save_p <- vector(length=sims_to_run)
+
+for(i in 1:sims_to_run){
+condition_1 <- rnorm(25,100,30)
+condition_2 <- rnorm(25,110,30)
+t.out <-t.test(condition_1,condition_2,paired=TRUE,var.equal = TRUE)
+save_p[i] <- t.out$p.value
+}
+
+hist(save_p)
+proportion_sig<-length(save_p[save_p<.05])/sims_to_run
+proportion_sig
+
+```
+
+The histogram of p-values is skewed left, so this design is more likely to produce p<.05 than not, but the statistical power (or proportion of significant simulations) is only `r proportion_sig`.
+
+To determine the number of subjects needed to achieve power = .8, you could fiddle with the number of subjects until you find the number, or you could add another loop to run multiple monte carlo simulations with difference numbers of subjects. 
+
+```{r}
+subject_numbers<-c(25,50,75,100,125,150,175,200)
+
+power<-vector(length=length(subject_numbers))
+for(subnum in 1:length(subject_numbers)){
+
+  sims_to_run<-1000
+  save_p <- vector(length=sims_to_run)
+  
+  for(i in 1:sims_to_run){
+    condition_1 <- rnorm(subject_numbers[subnum],100,30)
+    condition_2 <- rnorm(subject_numbers[subnum],110,30)
+    t.out <-t.test(condition_1,condition_2,paired=TRUE,var.equal = TRUE)
+    save_p[i] <- t.out$p.value
+  }
+  power[subnum]<-length(save_p[save_p<.05])/sims_to_run
+}
+
+power_table<-data.frame(subject_numbers,power)
+kable(power_table)
+
+
+```
+
+### Monte-Carlo One-way Repeated Measures Simulation
+
+The above simulations estimated individual subject sample means by drawing values directly from distributions. The individual trial data for each subject can also be simulated if desired. This can be useful for design planning as both the number of subjects and cell-size determine the power of the design. Depending on the situation, increasing the number of trials may do more for improving the sensitivity of the design than increasing the number of subjects, or vice-versa. To illustrate, the following example simulates individual trial data for subjects in a Stroop experiment. The retimes package is used to generate RT distributions.
+
+Before simulating an entire experiment it is worth simulating a Stroop effect for a single simulated subject. This shows the variance of Stroop effects given programmed values for the mean difference between congruent and incongruent trials, values of mu, sigma, and tau for the base RT distributions, as well as number of trials. 
+
+```{r}
+library(retimes)
+library(ggplot2)
+
+stroop_effects<-c()
+n_trials <- 144
+sim_mu <- 600
+sim_sigma <- 80
+sim_tau <- 150
+congruency_effect <- 100
+for(i in 1:1000){
+CongruentRTs <- rexgauss(n_trials,mu=sim_mu,sigma=sim_sigma,tau=sim_tau)
+IncongruentRTs <- rexgauss(n_trials,mu=sim_mu+congruency_effect,sigma=sim_sigma,tau=sim_tau)
+stroop_effects <- c(stroop_effects,mean(IncongruentRTs)-mean(CongruentRTs))
+}
+qplot(stroop_effects)+xlab("Simulated Stroop Effects")+geom_bar(fill="white",color="black")
+
+
+```
+The histogram shows that under the simulated parameters, the programmed Stroop effect of 100ms can easily take a value -from 50 to 150. The variance in the simulated Stroop effect for a single subject is determined by the variance in the underlying RT distributions for the congruent and incongruent conditions.
+
+The following simulation expands on the above to model multiple subjects in a Stroop experiment. We start with a minimum number of 10 trials per condition, in an Experiment with 20 subjects, and programmed Stroop effect of 50ms.
+
+```{r}
+sims_to_run<-100
+
+n_trials <- 10
+sim_mu <- 600
+sim_sigma <- 80
+sim_tau <- 150
+congruency_effect <- 50
+n_subjects <- 20
+save_p<-vector(length=sims_to_run)
+
+for(i in 1:sims_to_run){
+  all_subjects<-data.frame()
+  for(sub in 1:n_subjects){
+    CongruentRTs <- rexgauss(n_trials,mu=sim_mu,sigma=sim_sigma,tau=sim_tau)
+    IncongruentRTs <- rexgauss(n_trials,mu=sim_mu+congruency_effect,sigma=sim_sigma,tau=sim_tau)
+    temp_subject <- data.frame(subject=rep(sub,n_trials*2),
+                               condition=rep(c("Congruent","Incongruent"),each=n_trials),
+                               RTs=c(CongruentRTs,IncongruentRTs))
+    all_subjects<-rbind(all_subjects,temp_subject)
+  }
+mean_subject_data<-aggregate(RTs~subject*condition,all_subjects,mean)
+aov.out<-summary(aov(RTs~condition+Error(subject/condition),mean_subject_data))
+save_p[i]<-aov.out[[3]][[1]][[5]][1]
+}
+
+hist(save_p)
+proportion_sig<-length(save_p[save_p<.05])/sims_to_run
+
+```
+
+Tith these minimum trial counts, the power is `r proportion_sig` to detect the Stroop effect. Estimated power will increase with increasing numbers of subjects and/or trials in the simulated design. The last simulation shows how power increases as function of increasing trial counts.
+
+```{r}
+sims_to_run<-100
+
+n_trials <- c(10,20,30,40,50,60,70)
+sim_mu <- 600
+sim_sigma <- 80
+sim_tau <- 150
+congruency_effect <- 50
+n_subjects <- 20
+save_p<-vector(length=sims_to_run)
+proportion_sig<-vector(length=length(n_trials))
+
+for(trials in 1:length(n_trials)){
+  for(i in 1:sims_to_run){
+    all_subjects<-data.frame()
+    for(sub in 1:n_subjects){
+      CongruentRTs <- rexgauss(n_trials[trials],mu=sim_mu,sigma=sim_sigma,tau=sim_tau)
+      IncongruentRTs <- rexgauss(n_trials[trials],mu=sim_mu+congruency_effect,sigma=sim_sigma,tau=sim_tau)
+      temp_subject <- data.frame(subject=rep(sub,n_trials[trials]*2),
+                                 condition=rep(c("Congruent","Incongruent"),each=n_trials[trials]),
+                                 RTs=c(CongruentRTs,IncongruentRTs))
+      all_subjects<-rbind(all_subjects,temp_subject)
+    }
+    mean_subject_data<-aggregate(RTs~subject*condition,all_subjects,mean)
+    aov.out<-summary(aov(RTs~condition+Error(subject/condition),mean_subject_data))
+    save_p[i]<-aov.out[[3]][[1]][[5]][1]
+  }
+  proportion_sig[trials]<-length(save_p[save_p<.05])/sims_to_run
+}
+
+kable(data.frame(n_trials,proportion_sig))
+
+
+
+```
 
 ## Analysing data from a file
 
