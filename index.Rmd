@@ -1,7 +1,7 @@
 --- 
 title: "Programming for Psychologists: Data Creation and Analysis"
 author: "Matthew J. C. Crump"
-date: "`r Sys.Date()`"
+date: " 2014: Last compiled `r Sys.Date()`"
 site: bookdown::bookdown_site
 output: 
   bookdown::gitbook:
@@ -22,6 +22,8 @@ description: "Tips on learning programming skills for experimental psychology"
 
 # Preface {-}
 
+Crump, Matthew J. C. (2014). Programming for Psychologists: Data Creation and Analysis (Version 1.1). https://crumplab.github.io/programmingforpsych/
+
 This textbook is a collection of notes for a course on programming for psychologists, taught at the Graduate Center of CUNY, by Matthew Crump.
 
 *Contributing to the textbook*
@@ -40,3 +42,6 @@ This textbook is a collection of notes for a course on programming for psycholog
   
   b. The edit link in the top bar of the textbook should automatically take you to the source .Rmd file
 
+**License CC BY-SA 4.0 license**
+
+The book is released under a creative commons [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license. This means that this book can be reused, remixed, retained, revised and redistributed (including commercially) as long as appropriate credit is given to the authors. If you remix, or modify the original version of this open textbook, you must redistribute all versions of this open textbook under the same license - CC BY-SA 4.0.
