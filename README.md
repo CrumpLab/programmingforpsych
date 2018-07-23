@@ -4,8 +4,6 @@ Crump, Matthew J. C. (2017). *Programming for Psychologists: Data Creation and A
 
 This textbook is a collection of notes for a course on programming for psychologists, taught at the Graduate Center of CUNY in 2014, by Matthew Crump. This github repo contain all of the source code to compile the book using bookdown...I hacked the together the style files for the gitbook style and the tufte style, and may have changed some .css settings in the bookdown package itself on my computer (so I apologize in advance if it doesn't compile properly).
 
-The textbook can be viewed as a webook here at [https://crumplab.github.io/programmingforpsych/](https://crumplab.github.io/programmingforpsych/).
-
 ## Contributing to the textbook while you read it 
 
 1. Use Hypothes.is, an amazing tool for annotating the web.
