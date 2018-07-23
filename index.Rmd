@@ -22,7 +22,11 @@ description: "Tips on learning programming skills for experimental psychology"
 
 # Preface {-}
 
-Crump, Matthew J. C. (2014). Programming for Psychologists: Data Creation and Analysis (Version 1.1). https://crumplab.github.io/programmingforpsych/
+```{r,echo=F,fig.align="center",eval=T}
+knitr::include_graphics("Programming.png")
+```
+
+Crump, Matthew J. C. (2017). Programming for Psychologists: Data Creation and Analysis (Version 1.1). https://crumplab.github.io/programmingforpsych/
 
 This textbook is a collection of notes for a course on programming for psychologists, taught at the Graduate Center of CUNY, by Matthew Crump.
 
