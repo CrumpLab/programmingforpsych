@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Programming for Psychologists: Data Creation and Analysis</title>
   <meta name="description" content="Tips on learning programming skills for experimental psychology">
-  <meta name="generator" content="bookdown 0.4.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Programming for Psychologists: Data Creation and Analysis" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,6 @@
 <meta name="author" content="Matthew J. C. Crump">
 
 
-<meta name="date" content="2017-09-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -45,6 +44,17 @@
 
 
 
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-122820355-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-122820355-1');
+</script>
 
 
 <script type="text/javascript">
@@ -344,25 +354,27 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RandomNumbers &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">100</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">100</span>)</code></pre></div>
 <p>Typing the above line into the terminal will sample 100 numbers betwen 0 and 100 and place them into the variable named RandomNumbers. If you then type RandomNumbers into the terminal and press enter, you will see the contents (all of the 100 numbers) displayed in the R terminal. By changing the values in the function you can make your sample of numbers any size, and make the range any size.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RandomNumbers</code></pre></div>
-<pre><code>##   [1] 28.814687 30.718978 90.324742 56.664105 49.758874 91.138433 26.920794
-##   [8] 53.774066 56.214161 27.069558 17.885119 12.085565 70.039626 54.010380
-##  [15] 36.558923 30.115214 81.023205 54.262145  6.345125 14.621625  7.621679
-##  [22] 95.977902 53.612483 35.308667 86.579382 62.199750 26.870211 75.440657
-##  [29] 75.144924 36.243598  1.164188 85.410690  6.135266 84.470628 62.757512
-##  [36] 16.924159 75.374935 68.725519  1.464362 15.664612 35.430880 33.457818
-##  [43] 14.508405 17.192460 17.793219  9.361115 57.995663 51.820160 57.037164
-##  [50] 36.286869 31.266800 76.093033 65.093732 54.328752 55.204773 80.677760
-##  [57] 42.438444 22.130261 36.512313 97.189933 18.574373 43.302332  6.958642
-##  [64] 73.731679  6.021573  6.545734  5.618196 73.753892 73.053193  3.011088
-##  [71] 53.336628 23.930928 14.694248 94.059752 61.249019 47.206311 85.498373
-##  [78] 47.474598 11.432452 51.923361 47.772699 27.525764 12.944876 27.607124
-##  [85] 76.969174 85.258914 55.847224  8.957076 13.194778 81.397611 76.628296
-##  [92] 83.353409 82.781685 99.563184 23.593363 20.979616 50.343071 37.676410
-##  [99]  4.126825 96.924050</code></pre>
+<pre><code>##   [1] 91.2654145 56.8822931 20.0635908 34.6518903 10.8537034  0.5368581
+##   [7] 56.6647759 23.9157455  0.5928790 41.9277605 41.6376168 11.4893913
+##  [13] 26.6183077 81.0297271 12.7541092 45.8927764 28.3026568  7.6318424
+##  [19] 88.0367117 58.4848947 19.2669986 52.3848269 45.5031075 13.8295369
+##  [25] 70.0776661 16.3204222  9.9027640 98.5138549 73.5405458 11.3199723
+##  [31] 64.4454534 73.5260401 80.4517179 82.5569922 16.7484958 37.8183431
+##  [37]  4.1671211 25.1749545 44.0539660 31.7498367 88.3110507 47.0617328
+##  [43] 49.6143677 23.6522248  0.1575981 28.8038245 49.3365179 21.4763826
+##  [49]  2.2722786 80.6684986  4.3870921 25.6164176  1.7769107 76.5756857
+##  [55] 13.9331728 12.6007138 14.3283095 80.8557506 20.3127020 53.3333622
+##  [61] 23.3272288 18.3365837 33.3468942  6.9107721 24.1063094 30.5637017
+##  [67] 74.1516482 41.8748478 39.5631547 46.4118855 21.5030275 34.4031647
+##  [73] 57.8498485 63.6608869 80.8469308 40.9931882 94.9406620 19.0980094
+##  [79] 28.0343883 12.0220527 98.6353330 95.9582832 27.4341373 96.1474060
+##  [85] 44.6627734 50.2080907 35.5252436 37.5385494 28.1058358 49.2740142
+##  [91] 92.9508228 47.6934543  6.9844496 25.9221001 73.1427393 25.3996145
+##  [97] 39.0564417 25.9364573 75.2650085 94.1991969</code></pre>
 <p>It is also very easy to view these numbers graphically. For example, you might to see if your sample actually looks like a uniform distribution. One way to do this would be to create a histrogram that shows the frequency of each number according to different bin sizes (e.g., frequency of numbers between 0 and 10, 11 and 20, and so on). If the sample is a uniform distribution, then the bars of the histogram ought to be approximately the same height (e.g., flat and uniform). A histogram can be created using the function hist.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(RandomNumbers)</code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-49"></span>
-<img src="Programming_Crump_files/figure-html/unnamed-chunk-49-1.png" alt="Histogram of small sample of random numbers" width="384" />
+<div class="figure"><span id="fig:unnamed-chunk-50"></span>
+<img src="Programming_Crump_files/figure-html/unnamed-chunk-50-1.png" alt="Histogram of small sample of random numbers" width="384" />
 <p class="caption">
 Figure 5.1: Histogram of small sample of random numbers
 </p>
@@ -370,8 +382,8 @@ Figure 5.1: Histogram of small sample of random numbers
 <p>Notice that some of the bars are higher than others, but overall the distribution is relatively flat and uniform. The fact that the distribution is not perfectly uniform shows that a sample distribution does not always look exactly like the parent distribution. This variability in the sample is due to chance. The effect of chance can be reduced by taking a larger sample. For example, the above code could be modified to sample 10,000 numbers rather than 100 numbers. This larger sample ought to produce a histogram that shows a more flat and uniform distribution. An example of a histogram for such a sample is shown below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RandomNumbers &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">10000</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">100</span>)
 <span class="kw">hist</span>(RandomNumbers)</code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-50"></span>
-<img src="Programming_Crump_files/figure-html/unnamed-chunk-50-1.png" alt="Histogram of large sample of random numbers" width="384" />
+<div class="figure"><span id="fig:unnamed-chunk-51"></span>
+<img src="Programming_Crump_files/figure-html/unnamed-chunk-51-1.png" alt="Histogram of large sample of random numbers" width="384" />
 <p class="caption">
 Figure 5.2: Histogram of large sample of random numbers
 </p>
@@ -386,10 +398,10 @@ Figure 5.2: Histogram of large sample of random numbers
 <p>Let’s take 100 samples from a normal distribution with mean =100, and sd = 50, and plot the result in a histogram.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">normalSample &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">50</span>)
 <span class="kw">hist</span>(normalSample)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-52-1.png" width="384" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-53-1.png" width="384" /></p>
 <p>The above histogram shows a bell-like curve typical of a normal distribution. If we take a much larger sample of 10,000 numbers, the bell-like curve will become even more apparent.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rnorm</span>(<span class="dv">10000</span>, <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">50</span>))</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-53-1.png" width="384" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-54-1.png" width="384" /></p>
 </div>
 <div id="other-distributions" class="section level3">
 <h3><span class="header-section-number">5.1.3</span> Other distributions</h3>
@@ -415,25 +427,25 @@ for (i in <span class="dv">1</span>:<span class="dv">10000</span>) {
   allHeads &lt;-<span class="st"> </span><span class="kw">c</span>(allHeads,totalHeads)
 }
 <span class="kw">hist</span>(allHeads)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-58-1.png" width="384" /> The above histogram shows the frequency of getting 0, 1, 2, 3 and so on heads out of 10 coin flips for 10,000 simulations.</p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-59-1.png" width="384" /> The above histogram shows the frequency of getting 0, 1, 2, 3 and so on heads out of 10 coin flips for 10,000 simulations.</p>
 <p>The histogram function has an option to graph a probability density function as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(allHeads,<span class="dt">freq=</span><span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-59-1.png" width="384" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-60-1.png" width="384" /></p>
 <p>The hist function has several options that you can configure. Notice that the two histograms above have gaps between the bars. For this histogram, R has automatically created bins of size .5. So, it is attempting to produce a bar at 0, .5, 1, 1.5, 2, and so on. The size of the bin is called breaks and can be set by the user. In this simulation there are 11 possible outcomes (0,1, 2, 3, 4,5 6, 7, 8, 9, or 10 heads), so it makes sense to set the breaks to 11.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(allHeads, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="dv">11</span>)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-60-1.png" width="384" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-61-1.png" width="384" /></p>
 <p>A few other points are worth mentioning about the hist function. It is possible to save the results of the hist function to a variable or object. For example, we could use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="kw">hist</span>(allHeads, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="dv">11</span>)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-61-1.png" width="384" /> This line creates a variable x, and saves the results of the hist function to x. The variable x now contains the numerical details of the histogram. You can inspect these by typing x into the terminal and pressing enter. You should see a result like following:</p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-62-1.png" width="384" /> This line creates a variable x, and saves the results of the hist function to x. The variable x now contains the numerical details of the histogram. You can inspect these by typing x into the terminal and pressing enter. You should see a result like following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
 <pre><code>## $breaks
 ##  [1]  0  1  2  3  4  5  6  7  8  9 10
 ## 
 ## $counts
-##  [1]  117  434 1146 2001 2448 2097 1192  456   98   11
+##  [1]  114  447 1148 2020 2463 2070 1201  422  106    9
 ## 
 ## $density
-##  [1] 0.0117 0.0434 0.1146 0.2001 0.2448 0.2097 0.1192 0.0456 0.0098 0.0011
+##  [1] 0.0114 0.0447 0.1148 0.2020 0.2463 0.2070 0.1201 0.0422 0.0106 0.0009
 ## 
 ## $mids
 ##  [1] 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5
@@ -466,20 +478,20 @@ testScores[testScores &lt;<span class="st"> </span><span class="dv">0</span>] &l
 <p>Now the variable testScores will only contain numbers between the range 0-100.</p>
 <p>One first question is to determine the mean of sample. Use the mean function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(testScores)</code></pre></div>
-<pre><code>## [1] 53.34079</code></pre>
+<pre><code>## [1] 47.33925</code></pre>
 <p>The next step is to perform a one-sample t-test to determine if the mean of the sample if statistically different from 50. A one-sample t-test can be computed using the t.test function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(testScores,<span class="dt">mu=</span><span class="dv">50</span>)</code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
 ## data:  testScores
-## t = 0.45659, df = 9, p-value = 0.6588
+## t = -0.54805, df = 9, p-value = 0.597
 ## alternative hypothesis: true mean is not equal to 50
 ## 95 percent confidence interval:
-##  36.78880 69.89279
+##  36.35658 58.32192
 ## sample estimates:
 ## mean of x 
-##  53.34079</code></pre>
+##  47.33925</code></pre>
 <p>In the above, mu refers to the population mean. Most likely the t-test will return a non-significant p-value. This makes sense because the sample was taken from a distribution with a mean of 50, so the sample mean should not be different from 50. However, because the number of samples was small (only 10), it is possible by chance alone to find a significant result. Let’s create a different sample of test scores with a mean of 80, and run a one-sample t-test.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">testScores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">80</span>, <span class="dt">sd =</span> <span class="dv">20</span>)
 testScores[testScores &gt;<span class="st"> </span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="dv">100</span>
@@ -489,13 +501,13 @@ testScores[testScores &lt;<span class="st"> </span><span class="dv">0</span>] &l
 ##  One Sample t-test
 ## 
 ## data:  testScores
-## t = 6.4774, df = 9, p-value = 0.0001144
+## t = 4.8969, df = 9, p-value = 0.0008513
 ## alternative hypothesis: true mean is not equal to 50
 ## 95 percent confidence interval:
-##  70.32809 92.14661
+##  63.84289 87.61374
 ## sample estimates:
 ## mean of x 
-##  81.23735</code></pre>
+##  75.72831</code></pre>
 <p>In this case, the t-test will usually return a significant result, and this makes sense because the sample was drawn from a distribution with a mean of 80, not 50. However, even though we sampled from a distribution with mean 80, it is possible by chance alone that the t-test will return a non-significant result. The main factors that influence whether or not a one-sample test returns a significant result are: 1) the size of the difference between the sample and population mean, 2) the number of subjects or scores in the sample, 3) the variance of the sample. Larger differences, larger number of subjects, and smaller variances all lead to significant differences. Smaller differences, smaller number of subjects, and larger variance all lead to non-significant differences.</p>
 </div>
 <div id="simulating-an-independent-samples-t-test-two-groups-between-subjects" class="section level3">
@@ -514,26 +526,26 @@ Control[Control &lt;<span class="st"> </span><span class="dv">0</span>] &lt;-<sp
 ##  Welch Two Sample t-test
 ## 
 ## data:  Alcohol and Control
-## t = 4.0642, df = 37.905, p-value = 0.0002341
+## t = 0.2038, df = 36.2, p-value = 0.8397
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   58.75843 175.40825
+##  -57.86335  70.79444
 ## sample estimates:
 ## mean of x mean of y 
-##  237.3779  120.2946</code></pre>
+##  194.9308  188.4652</code></pre>
 <p>Note the title of the t-test is called the Welch Two Sample t-test. This is the default t-test in R. If you were to run a t-test on the same scores in excel or SPSS, you find slightly different values. This is because the Welch test involves a statistical correction. It is possible to get the standard student’s t-test by setting the var.equal parameter as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(Alcohol,Control, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  Alcohol and Control
-## t = 4.0642, df = 38, p-value = 0.0002333
+## t = 0.2038, df = 38, p-value = 0.8396
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   58.76321 175.40347
+##  -57.75830  70.68939
 ## sample estimates:
 ## mean of x mean of y 
-##  237.3779  120.2946</code></pre>
+##  194.9308  188.4652</code></pre>
 <p>As you can see the results of the different versions of the t-tests are small. But, it is still a good idea to know which t-test you are performing. For all future t-tests in this tutorial, we will use the standard version, and always remember to set var.equal = TRUE. The t.test function has several other parameters that can be set (e.g., running a one vs. two-tailed test). These options can be found by looking up t.test in R help.</p>
 </div>
 <div id="simulating-a-paired-samples-t-test-two-conditions-within-subjects" class="section level3">
@@ -547,22 +559,22 @@ day2&lt;-<span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="
 day2[day2&lt;<span class="dv">0</span>]&lt;-<span class="dv">0</span></code></pre></div>
 <p>Next, look at the means.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(day1)</code></pre></div>
-<pre><code>## [1] 19.87023</code></pre>
+<pre><code>## [1] 20.32776</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(day2)</code></pre></div>
-<pre><code>## [1] 30.19157</code></pre>
+<pre><code>## [1] 29.39414</code></pre>
 <p>Finally, compute the paired-samples t-test using the t.test function. This will be the same as before, except the option for a paired test will be set to TRUE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(day1, day2, <span class="dt">var.equal=</span><span class="ot">TRUE</span>, <span class="dt">paired=</span><span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  day1 and day2
-## t = -7.2789, df = 19, p-value = 6.618e-07
+## t = -4.6223, df = 19, p-value = 0.0001859
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -13.289201  -7.353483
+##  -13.171750  -4.961008
 ## sample estimates:
 ## mean of the differences 
-##               -10.32134</code></pre>
+##               -9.066379</code></pre>
 </div>
 <div id="generality-of-the-t-test-examples" class="section level3">
 <h3><span class="header-section-number">5.3.4</span> Generality of the t-test examples</h3>
@@ -650,24 +662,24 @@ day3[day3 &lt;<span class="st"> </span><span class="dv">0</span>] &lt;-<span cla
 <pre><code>## 
 ## Error: Subjects
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## Residuals 19  603.8   31.78               
+## Residuals 19  504.5   26.55               
 ## 
 ## Error: Subjects:Practice
 ##           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-## Practice   2   3289  1644.6   81.91 1.67e-14 ***
-## Residuals 38    763    20.1                     
+## Practice   2   4320  2160.2   78.73 3.06e-14 ***
+## Residuals 38   1043    27.4                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">model.tables</span>(ANOVAresults,<span class="st">&quot;means&quot;</span>) </code></pre></div>
 <pre><code>## Tables of means
 ## Grand mean
 ##          
-## 29.22817 
+## 30.35274 
 ## 
 ##  Practice 
 ## Practice
 ##  day1  day2  day3 
-## 20.30 28.96 38.43</code></pre>
+## 19.53 31.28 40.25</code></pre>
 <p>Here is all the code for the simulation in one complete script:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">day1&lt;-<span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">5</span>)
 day2&lt;-<span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">5</span>)
@@ -817,11 +829,11 @@ save_p[i] &lt;-<span class="st"> </span>t.out$p.value
 }
 
 <span class="kw">hist</span>(save_p)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">proportion_sig&lt;-<span class="kw">length</span>(save_p[save_p&lt;.<span class="dv">05</span>])/sims_to_run
 proportion_sig</code></pre></div>
-<pre><code>## [1] 0.047</code></pre>
-<p>As expected, the histogram of simulated p-values is roughly uniform, indicating that all possible p-values are equally likely. In other words, chance would be expected to produce p&lt;.05 about 5% of the time. The calculated proportion of significant values was 0.047. In general, as the number of simulated runs increases toward infinity, the estimated parameter should settle on it’s true expected value.</p>
+<pre><code>## [1] 0.043</code></pre>
+<p>As expected, the histogram of simulated p-values is roughly uniform, indicating that all possible p-values are equally likely. In other words, chance would be expected to produce p&lt;.05 about 5% of the time. The calculated proportion of significant values was 0.043. In general, as the number of simulated runs increases toward infinity, the estimated parameter should settle on it’s true expected value.</p>
 </div>
 <div id="monte-carlo-paired-t-test-simulation" class="section level3">
 <h3><span class="header-section-number">5.8.2</span> Monte-Carlo paired T-test Simulation</h3>
@@ -837,11 +849,11 @@ save_p[i] &lt;-<span class="st"> </span>t.out$p.value
 }
 
 <span class="kw">hist</span>(save_p)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">proportion_sig&lt;-<span class="kw">length</span>(save_p[save_p&lt;.<span class="dv">05</span>])/sims_to_run
 proportion_sig</code></pre></div>
-<pre><code>## [1] 0.205</code></pre>
-<p>The histogram of p-values is skewed left, so this design is more likely to produce p&lt;.05 than not, but the statistical power (or proportion of significant simulations) is only 0.205.</p>
+<pre><code>## [1] 0.223</code></pre>
+<p>The histogram of p-values is skewed left, so this design is more likely to produce p&lt;.05 than not, but the statistical power (or proportion of significant simulations) is only 0.223.</p>
 <p>To determine the number of subjects needed to achieve power = .8, you could fiddle with the number of subjects until you find the number, or you could add another loop to run multiple monte carlo simulations with difference numbers of subjects.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subject_numbers&lt;-<span class="kw">c</span>(<span class="dv">25</span>,<span class="dv">50</span>,<span class="dv">75</span>,<span class="dv">100</span>,<span class="dv">125</span>,<span class="dv">150</span>,<span class="dv">175</span>,<span class="dv">200</span>)
 
@@ -872,15 +884,15 @@ power_table&lt;-<span class="kw">data.frame</span>(subject_numbers,power)
 <tbody>
 <tr class="odd">
 <td align="right">25</td>
-<td align="right">0.194</td>
+<td align="right">0.213</td>
 </tr>
 <tr class="even">
 <td align="right">50</td>
-<td align="right">0.387</td>
+<td align="right">0.359</td>
 </tr>
 <tr class="odd">
 <td align="right">75</td>
-<td align="right">0.506</td>
+<td align="right">0.503</td>
 </tr>
 <tr class="even">
 <td align="right">100</td>
@@ -888,19 +900,19 @@ power_table&lt;-<span class="kw">data.frame</span>(subject_numbers,power)
 </tr>
 <tr class="odd">
 <td align="right">125</td>
-<td align="right">0.750</td>
+<td align="right">0.747</td>
 </tr>
 <tr class="even">
 <td align="right">150</td>
-<td align="right">0.804</td>
+<td align="right">0.811</td>
 </tr>
 <tr class="odd">
 <td align="right">175</td>
-<td align="right">0.866</td>
+<td align="right">0.871</td>
 </tr>
 <tr class="even">
 <td align="right">200</td>
-<td align="right">0.923</td>
+<td align="right">0.895</td>
 </tr>
 </tbody>
 </table>
@@ -911,9 +923,9 @@ power_table&lt;-<span class="kw">data.frame</span>(subject_numbers,power)
 <p>Before simulating an entire experiment it is worth simulating a Stroop effect for a single simulated subject. This shows the variance of Stroop effects given programmed values for the mean difference between congruent and incongruent trials, values of mu, sigma, and tau for the base RT distributions, as well as number of trials.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(retimes)</code></pre></div>
 <pre><code>## Reaction Time Analysis (version 0.1-2)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-
-stroop_effects&lt;-<span class="kw">c</span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.4.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stroop_effects&lt;-<span class="kw">c</span>()
 n_trials &lt;-<span class="st"> </span><span class="dv">144</span>
 sim_mu &lt;-<span class="st"> </span><span class="dv">600</span>
 sim_sigma &lt;-<span class="st"> </span><span class="dv">80</span>
@@ -926,7 +938,7 @@ stroop_effects &lt;-<span class="st"> </span><span class="kw">c</span>(stroop_ef
 }
 <span class="kw">qplot</span>(stroop_effects)+<span class="kw">xlab</span>(<span class="st">&quot;Simulated Stroop Effects&quot;</span>)+<span class="kw">geom_bar</span>(<span class="dt">fill=</span><span class="st">&quot;white&quot;</span>,<span class="dt">color=</span><span class="st">&quot;black&quot;</span>)</code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-112-1.png" width="672" /> The histogram shows that under the simulated parameters, the programmed Stroop effect of 100ms can easily take a value -from 50 to 150. The variance in the simulated Stroop effect for a single subject is determined by the variance in the underlying RT distributions for the congruent and incongruent conditions.</p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-113-1.png" width="672" /> The histogram shows that under the simulated parameters, the programmed Stroop effect of 100ms can easily take a value -from 50 to 150. The variance in the simulated Stroop effect for a single subject is determined by the variance in the underlying RT distributions for the congruent and incongruent conditions.</p>
 <p>The following simulation expands on the above to model multiple subjects in a Stroop experiment. We start with a minimum number of 10 trials per condition, in an Experiment with 20 subjects, and programmed Stroop effect of 50ms.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sims_to_run&lt;-<span class="dv">100</span>
 
@@ -954,9 +966,9 @@ save_p[i]&lt;-aov.out[[<span class="dv">3</span>]][[<span class="dv">1</span>]][
 }
 
 <span class="kw">hist</span>(save_p)</code></pre></div>
-<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
+<p><img src="Programming_Crump_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">proportion_sig&lt;-<span class="kw">length</span>(save_p[save_p&lt;.<span class="dv">05</span>])/sims_to_run</code></pre></div>
-<p>Tith these minimum trial counts, the power is 0.2 to detect the Stroop effect. Estimated power will increase with increasing numbers of subjects and/or trials in the simulated design. The last simulation shows how power increases as function of increasing trial counts.</p>
+<p>Tith these minimum trial counts, the power is 0.26 to detect the Stroop effect. Estimated power will increase with increasing numbers of subjects and/or trials in the simulated design. The last simulation shows how power increases as function of increasing trial counts.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sims_to_run&lt;-<span class="dv">100</span>
 
 n_trials &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>)
@@ -997,31 +1009,31 @@ for(trials in <span class="dv">1</span>:<span class="kw">length</span>(n_trials)
 <tbody>
 <tr class="odd">
 <td align="right">10</td>
-<td align="right">0.28</td>
+<td align="right">0.22</td>
 </tr>
 <tr class="even">
 <td align="right">20</td>
-<td align="right">0.54</td>
+<td align="right">0.51</td>
 </tr>
 <tr class="odd">
 <td align="right">30</td>
-<td align="right">0.61</td>
+<td align="right">0.68</td>
 </tr>
 <tr class="even">
 <td align="right">40</td>
-<td align="right">0.80</td>
+<td align="right">0.76</td>
 </tr>
 <tr class="odd">
 <td align="right">50</td>
-<td align="right">0.91</td>
+<td align="right">0.85</td>
 </tr>
 <tr class="even">
 <td align="right">60</td>
-<td align="right">0.94</td>
+<td align="right">0.99</td>
 </tr>
 <tr class="odd">
 <td align="right">70</td>
-<td align="right">0.95</td>
+<td align="right">0.93</td>
 </tr>
 </tbody>
 </table>
@@ -1142,8 +1154,9 @@ aov.out &lt;-<span class="st"> </span><span class="kw">summary</span>(<span clas
 </tbody>
 </table>
 <p>The results from t-tests can be prettified using broom</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)
-<span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">t.test</span>(DV~IV1,AllData[AllData$IV1!=<span class="st">&quot;Group1&quot;</span>,], <span class="dt">paired=</span><span class="ot">TRUE</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)</code></pre></div>
+<pre><code>## Warning: package &#39;broom&#39; was built under R version 3.4.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">t.test</span>(DV~IV1,AllData[AllData$IV1!=<span class="st">&quot;Group1&quot;</span>,], <span class="dt">paired=</span><span class="ot">TRUE</span>)))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1339,10 +1352,11 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
