@@ -1,4 +1,4 @@
-## What it this?
+## What is this?
 
 Crump, Matthew J. C. (2017). *Programming for Psychologists: Data Creation and Analysis* (Version 1.1). [https://crumplab.github.io/programmingforpsych/](https://crumplab.github.io/programmingforpsych/)
 
